@@ -7,12 +7,16 @@
 * Author URI: aliowebdeveloper@gmail.com
 */
 
+define( SWS_PLUGIN_NAME, 'Woocommerce SKU Variations Cleaner SWS' );
+define( SWS_TEMPLATE_PATH, plugin_dir_path( __FILE__ ) . "templates/" );
+/* задать константы опций, чтобы сохранялись в бд */
+
 /**
- * SKU_Variations_Cleaner class
+ * SKU Variations Cleaner class
  *
  * class used as a namespace
  *
- * @package Upload Media By Zip
+ * @package SKU Variations Cleaner
  */
 class SKU_Variations_Cleaner {
 	/**
@@ -20,11 +24,11 @@ class SKU_Variations_Cleaner {
 	 *
 	 * @return void
 	 */
-	function woocommerce_old_sku_cleaner() {
-		add_action( 'admin_menu', array( &$this, 'menu' ) );
-		add_action( 'admin_init', array( &$this, 'get_title' ) );
-		add_filter( 'media_upload_tabs', array( &$this, 'create_new_tab') );
-		add_action( 'media_buttons', array( &$this, 'context'), 11 );
+	function sku_variations_cleaner() {
+		add_action( 'admin_menu', array( &$this, 'setting_page_menu' ), 99 );
+		//add_action( 'admin_init', array( &$this, 'get_title' ) );
+		//add_filter( 'media_upload_tabs', array( &$this, 'create_new_tab') );
+		//add_action( 'media_buttons', array( &$this, 'context'), 11 );
 		//add_filter( 'media_upload_uploadzip', array( &$this, 'media_upload_uploadzip') );
 	}
 	/**
@@ -32,10 +36,8 @@ class SKU_Variations_Cleaner {
 	 *
 	 * @return void
 	 */
-	function menu() {
-		$page = add_submenu_page( 'woocommerce', __( 'Woocommerce Old SKU Cleaner', 'wordpress' ), __( 'Old SKU Cleaner', 'wordpress' ), 'old_sku_cleaner', __FILE__, array( &$this, 'page' ) );
-		add_action( 'admin_print_scripts-' . $page, array( &$this, 'scripts' ) );
-		/*$page = add_media_page( 'Woocommerce Old SKU Cleaner', 'Woocommerce Old SKU Cleaner', 'old_sku_cleaner', __FILE__, array( &$this, 'page' ) );*/
+	function setting_page_menu() {
+		$page = add_submenu_page( 'woocommerce', SWS_PLUGIN_NAME, 'Clear Variations', 'manage_options', 'sku_variations_cleaner', array( &$this, 'sku_variations_cleaner_page' ) );
 	}
 
 	/**
@@ -44,10 +46,9 @@ class SKU_Variations_Cleaner {
 	 * @param array $tabs Existing media tabs
 	 * @return array $tabs Modified media tabs
 	 */
-	/*function create_new_tab( $tabs ) {
-		$tabs['uploadzip'] = __( 'Upload Zip Archive', 'upload-media-by-zip' );
-	    return $tabs;
-	}*/
+	function sku_variations_cleaner_page() {
+		include SWS_TEMPLATE_PATH . "main_settings.php";
+	}
 	/**
 	 * Move unzipped content from temp folder to media library
 	 *
@@ -101,7 +102,7 @@ if ( $simples ) {
 
 /* removing sku post */
 $del_sku = $wpdb->delete( 'wp_postmeta', array( 'meta_key' => '_sku', 'post_id' => 14573 ) );
-pr($del_sku); exit;
+//pr($del_sku); exit;
 
-pr($needless_childs); exit;
+//pr($needless_childs); exit;
 $products_id = $wpdb->get_results( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='%s'", '_sku' ) );
