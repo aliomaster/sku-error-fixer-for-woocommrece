@@ -1,0 +1,15 @@
+.dashicons-before.options_icon:before {
+	width: 30px;
+	height: 30px;
+	font-size: 30px;
+	margin-right: 5px;
+}
+
+.wc_sku_cleaner td {
+	margin-top: 1em;
+}
+
+.cleaner_divider {
+	width: 30%;
+	margin: 20px 0 20px;
+}
