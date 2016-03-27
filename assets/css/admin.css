@@ -13,3 +13,9 @@
 	width: 30%;
 	margin: 20px 0 20px;
 }
+
+.wc_sku_cleaner table.form-table:last-of-type label[for^=auto_clean] {
+	float: left;
+	clear: both;
+	margin-bottom: 8px;
+}

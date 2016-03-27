@@ -1,17 +1,24 @@
 <?php
 
 /**
- * 
- * This file runs when the plugin in uninstalled (deleted).
- * This will not run when the plugin is deactivated.
- * Ideally you will add all your clean-up scripts here
- * that will clean-up unused meta, options, etc. in the database.
+ * Woocommerce SKU Variations Cleaner Uninstall
  *
+ * Uninstalling plugin deletes options.
+ *
+ * @package WordPress
+ * @author      Alio Master (SWS - SpaceWorkSpace)
+ * @version     1.0.0
  */
 
-// If plugin is not being uninstalled, exit (do nothing)
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// Do something here if plugin is being uninstalled.
+/**
+ * Delete all plugin options from Data Base
+ */
+
+$options = get_option( 'sku_vars_cleaner_settings' );
+if ( isset( $options) && ! empty( $options ) ) {
+	delete_option( 'sku_vars_cleaner_settings' );
+}
