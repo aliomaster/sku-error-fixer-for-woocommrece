@@ -9,7 +9,7 @@
 	margin-top: 1em;
 }
 
-.cleaner_divider {
+.wc_sku_cleaner .cleaner_divider {
 	width: 30%;
 	margin: 20px 0 20px;
 }
@@ -18,4 +18,8 @@
 	float: left;
 	clear: both;
 	margin-bottom: 8px;
+}
+
+.wc_sku_cleaner .search_result {
+	background: url('../img/loader.gif') no-repeat;
 }

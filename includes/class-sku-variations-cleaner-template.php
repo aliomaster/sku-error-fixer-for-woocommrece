@@ -117,6 +117,10 @@ class SKU_Variations_Cleaner_Template {
 	public function admin_enqueue_scripts ( $hook = '' ) {
 		wp_register_script( $this->_token . '-admin', esc_url( $this->assets_url ) . 'js/admin.js', array( 'jquery' ), $this->_version );
 		wp_enqueue_script( $this->_token . '-admin' );
+		wp_localize_script( 'jquery', $this->_token . '_ajaxUrl', array(
+			'url' => admin_url( 'admin-ajax.php' )
+		) );
+
 	} // End admin_enqueue_scripts ()
 
 	/**

@@ -14,12 +14,17 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+define( 'SWS_VAR_CLEANER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+
 // Load plugin class files
 require_once( 'includes/class-sku-variations-cleaner-template.php' );
 require_once( 'includes/class-sku-variations-cleaner-template-settings.php' );
 
 // Load plugin libraries
 require_once( 'includes/lib/class-sku-variations-cleaner-admin-api.php' );
+
+// Load functions
+require_once( 'includes/ajax-functions.php' );
 
 // helper developer function
 if ( ! function_exists( 'pr' ) ) {
