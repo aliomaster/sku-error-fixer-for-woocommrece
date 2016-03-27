@@ -21,7 +21,7 @@ require_once( 'includes/class-sku-variations-cleaner-template-settings.php' );
 // Load plugin libraries
 require_once( 'includes/lib/class-sku-variations-cleaner-admin-api.php' );
 
-// helper function
+// helper developer function
 if ( ! function_exists( 'pr' ) ) {
 	function pr($val) {
 		echo '<pre>';

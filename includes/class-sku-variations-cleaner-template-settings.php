@@ -76,7 +76,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 	 * @return array 		Modified links
 	 */
 	public function add_settings_link ( $links ) {
-		$settings_link = '<a href="options-general.php?page=' . $this->parent->_token . '_settings">' . __( 'Settings' ) . '</a>';
+		$settings_link = '<a href="admin.php?page=' . $this->parent->_token . '_settings">' . __( 'Settings' ) . '</a>';
   		array_unshift( $links, $settings_link );
   		return $links;
 	}

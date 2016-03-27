@@ -18,7 +18,12 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  * Delete all plugin options from Data Base
  */
 
-$options = get_option( 'sku_vars_cleaner_settings' );
-if ( isset( $options) && ! empty( $options ) ) {
-	delete_option( 'sku_vars_cleaner_settings' );
+$auto_clean_option = get_option( 'alio_auto_clean' );
+$version_option = get_option( 'sku_vars_cleaner_version' );
+
+if ( isset( $auto_clean_option) ) {
+	delete_option( 'alio_auto_clean' );
+}
+if ( isset( $version_option) ) {
+	delete_option( 'sku_vars_cleaner_version' );
 }
