@@ -129,7 +129,24 @@ class SKU_Variations_Cleaner {
 	 */
 	private function settings_fields () {
 
-		$settings['standard'] = array(
+		$settings = array(
+			'title' => SWS_VAR_CLEANER_PLUGIN_NAME,
+			'description' => __( 'Here you can clear...' ),
+			'fields' => array(
+				'id' => SWS_VAR_CLEANER_AUTO,
+				'label' => __( 'Automatically' ),
+				'description' => __( 'When I change the product type to Simple from Variable:' ),
+				'type' => 'radio',
+				'options' => array(
+					'default' => 'Default (not clean)',
+					'auto_del_fully' => 'Automatically delete old variations',
+					'auto_del_sku' => 'Automatically clean old skus of variables'
+				),
+				'default' => 'default',
+			),
+		);
+
+/*		$settings['standard'] = array(
 			'title'					=> __( 'Standard' ),
 			'description'			=> __( 'These are fairly standard form input fields.' ),
 			'fields'				=> array(
@@ -235,7 +252,7 @@ class SKU_Variations_Cleaner {
 					'default'		=> array( 'linux' )
 				)
 			)
-		);
+		);*/
 
 		$settings = apply_filters( SWS_VAR_CLEANER_SLUG . '_settings_fields', $settings );
 
@@ -247,24 +264,25 @@ class SKU_Variations_Cleaner {
 	 * @return void
 	 */
 	public function register_settings () {
+		//pr($this->settings); exit;
 		if ( is_array( $this->settings ) ) {
 
 			// Check posted/selected tab
-			$current_section = '';
+			/*$current_section = '';
 			if ( isset( $_POST['tab'] ) && $_POST['tab'] ) {
 				$current_section = $_POST['tab'];
 			} else {
 				if ( isset( $_GET['tab'] ) && $_GET['tab'] ) {
 					$current_section = $_GET['tab'];
 				}
-			}
+			}*/
 
-			foreach ( $this->settings as $section => $data ) {
+			foreach ( $this->settings as /*$section =>*/ $data ) {
 
-				if ( $current_section && $current_section != $section ) continue;
+				/*if ( $current_section && $current_section != $section ) continue;*/
 
 				// Add section to page
-				add_settings_section( $section, $data['title'], array( $this, 'settings_section' ), SWS_VAR_CLEANER_SLUG . '_settings' );
+				/*add_settings_section( $section, $data['title'], array( $this, 'settings_section' ), SWS_VAR_CLEANER_SLUG . '_settings' );*/
 
 				foreach ( $data['fields'] as $field ) {
 
@@ -282,7 +300,7 @@ class SKU_Variations_Cleaner {
 					add_settings_field( $field['id'], $field['label'], array( $this->admin, 'display_field' ), SWS_VAR_CLEANER_SLUG . '_settings', $section, array( 'field' => $field, 'prefix' => $this->base ) );
 				}
 
-				if ( ! $current_section ) break;
+				/*if ( ! $current_section ) break;*/
 			}
 		}
 	}
@@ -300,15 +318,15 @@ class SKU_Variations_Cleaner {
 
 		// Build page HTML
 		$html = '<div class="wrap" id="' . SWS_VAR_CLEANER_SLUG . '_settings">' . "\n";
-			$html .= '<h2>' . __( 'Plugin Settings'  ) . '</h2>' . "\n";
+			$html .= '<h2>' . __( SWS_VAR_CLEANER_PLUGIN_NAME ) . '</h2>' . "\n";
 
-			$tab = '';
+			/*$tab = '';
 			if ( isset( $_GET['tab'] ) && $_GET['tab'] ) {
 				$tab .= $_GET['tab'];
-			}
+			}*/
 
 			// Show page tabs
-			if ( is_array( $this->settings ) && 1 < count( $this->settings ) ) {
+/*			if ( is_array( $this->settings ) && 1 < count( $this->settings ) ) {
 
 				$html .= '<h2 class="nav-tab-wrapper">' . "\n";
 
@@ -340,7 +358,7 @@ class SKU_Variations_Cleaner {
 				}
 
 				$html .= '</h2>' . "\n";
-			}
+			}*/
 
 			$html .= '<form method="post" action="options.php" enctype="multipart/form-data">' . "\n";
 
@@ -351,7 +369,7 @@ class SKU_Variations_Cleaner {
 				$html .= ob_get_clean();
 
 				$html .= '<p class="submit">' . "\n";
-					$html .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />' . "\n";
+/*					$html .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />' . "\n";*/
 					$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings'  ) ) . '" />' . "\n";
 				$html .= '</p>' . "\n";
 			$html .= '</form>' . "\n";
