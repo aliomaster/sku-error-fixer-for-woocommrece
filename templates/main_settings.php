@@ -1,15 +1,31 @@
 <?php 
-if ( isset( $_POST[SWS_VAR_CLEANER_AUTO]) ) {
-	update_option( SWS_VAR_CLEANER_AUTO, $_POST[SWS_VAR_CLEANER_AUTO] );
+
+//pr($_POST); exit;
+
+if ( isset( $_POST[SWS_VAR_CLEANER_AUTO] ) ) {
+	update_option( SWS_VAR_CLEANER_OPTIONS_GROUP, array( SWS_VAR_CLEANER_AUTO => $_POST[SWS_VAR_CLEANER_AUTO] ) );
+	
 	echo "<div class='updated'><p>" . _e( 'Settings updated' ) . "</p></div>";
 }
+/*if ( ! isset( $_REQUEST['settings-updated'] ) ) {
+	echo '<div class="updated"><p><strong>' . _e( 'Options saved!' ); . '</strong></p></div>';
+}*/
+	if ( ! get_option( SWS_VAR_CLEANER_OPTIONS_GROUP, false ) ) {
+		update_option( SWS_VAR_CLEANER_OPTIONS_GROUP, array( SWS_VAR_CLEANER_AUTO => 'default' ) );
+	}
+
 ?>
 <div class="wrap">
 	<h2 class="dashicons-before dashicons-admin-generic options_icon">
 		<?php echo SWS_VAR_CLEANER_PLUGIN_NAME; ?>
 	</h2>
-	<form method="POST" action="options" enctype="multipart/form-data">
-	<?php //settings_fields( 'theme_option_group' ); ?>
+	<form method="POST" action="options.php" enctype="multipart/form-data">
+	<?php
+		settings_fields( SWS_VAR_CLEANER_OPTIONS_GROUP );
+		$group_option = get_option( SWS_VAR_CLEANER_OPTIONS_GROUP );
+		$auto_option = $group_option[SWS_VAR_CLEANER_AUTO];
+	?>
+
 	<table class="form-table wc_sku_cleaner">
 		<tr>
 			<th scope="row">
@@ -46,9 +62,9 @@ if ( isset( $_POST[SWS_VAR_CLEANER_AUTO]) ) {
 				</p>
 			</th>
 			<td class="auto_labels">
-				<p><label for="auto_clean0"><input type="radio" name="auto_clean" value="default" id="auto_clean0"> <?php _e( 'Default (not clean)' ); ?></label></p>
-				<p><label for="auto_clean1"><input type="radio" name="auto_clean" value="auto_del_fully" id="auto_clean1"> <?php _e( 'Automatically delete old variations' ); ?></label></p>
-				<p><label for="auto_clean2"><input type="radio" name="auto_clean" value="auto_del_sku" id="auto_clean2"> <?php _e( 'Automatically clean old skus of variables' ); ?></label></p>
+				<p><label for="auto_clean0"><input type="radio" name='<?php echo SWS_VAR_CLEANER_AUTO; ?>' value="default" id="auto_clean0"<?php echo ( $auto_option == 'default' ) ? 'checked="checked"' : ''; ?>> <?php _e( 'Default (not clean)' ); ?></label></p>
+				<p><label for="auto_clean1"><input type="radio" name='<?php echo SWS_VAR_CLEANER_AUTO; ?>' value="auto_del_fully" id="auto_clean1"<?php echo ( $auto_option == 'auto_del_fully' ) ? 'checked="checked"' : ''; ?>> <?php _e( 'Automatically delete old variations' ); ?></label></p>
+				<p><label for="auto_clean2"><input type="radio" name='<?php echo SWS_VAR_CLEANER_AUTO; ?>' value="auto_del_sku" id="auto_clean2"<?php echo ( $auto_option == 'auto_del_sku' ) ? 'checked="checked"' : ''; ?>> <?php _e( 'Automatically clean old skus of variables' ); ?></label></p>
 			</td>
 		</tr>
 	</table>

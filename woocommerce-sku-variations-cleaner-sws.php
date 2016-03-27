@@ -18,9 +18,18 @@ define( 'SWS_VAR_CLEANER_PLUGIN_NAME', 'Woocommerce SKU Variations Cleaner SWS' 
 define( 'SWS_VAR_CLEANER_PLUGIN_URL', __FILE__ );
 define( 'SWS_VAR_CLEANER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SWS_VAR_CLEANER_TEMPLATE_PATH', plugin_dir_path( __FILE__ ) . "templates/" );
+define( 'SWS_VAR_CLEANER_OPTIONS_GROUP', 'sku_vars_cleaner_options' );
 define( 'SWS_VAR_CLEANER_AUTO', 'auto_clean' );
 
-/* задать константы опций, чтобы сохранялись в бд */
+// helper function
+if ( ! function_exists( 'pr' ) ) {
+	function pr($val) {
+		echo '<pre>';
+		print_r($val);
+		echo '</pre>';
+	}
+}
+
 
 /**
  * SKU Variations Cleaner class
@@ -36,6 +45,7 @@ class SKU_Variations_Cleaner {
 	 * @return void
 	 */
 	function sku_variations_cleaner() {
+		add_action( 'admin_init', array( $this, 'sku_variations_cleaner_register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'setting_page_menu' ), 99 );
 		//add_action( 'admin_init', array( &$this, 'get_title' ) );
 		//add_filter( 'media_upload_tabs', array( &$this, 'create_new_tab') );
@@ -92,14 +102,62 @@ class SKU_Variations_Cleaner {
 	 * @return void
 	 */
 	function setting_page_menu() {
-		$page = add_submenu_page( 'woocommerce', SWS_VAR_CLEANER_PLUGIN_NAME, 'Clear Variations', 'manage_options', 'sku_variations_cleaner', array( $this, 'sku_variations_cleaner_page' ) );
+		add_submenu_page( 'woocommerce', SWS_VAR_CLEANER_PLUGIN_NAME, 'Clear Variations', 'manage_options', 'sku_variations_cleaner', array( $this, 'sku_variations_cleaner_page' ) );
 	}
 
 	/**
-	 * Add the new tab to the media pop-ip
+	 * Register plugin settings
 	 *
-	 * @param array $tabs Existing media tabs
-	 * @return array $tabs Modified media tabs
+	 * @return void
+	 */
+	function sku_variations_cleaner_register_settings() {
+		register_setting( SWS_VAR_CLEANER_OPTIONS_GROUP, SWS_VAR_CLEANER_OPTIONS_GROUP/*, array( $this, 'sku_vars_cleaner_sanitize_options' )*/ );
+	}
+
+	/**
+	 * Sanitize plugin settings
+	 *
+	 * @return void
+	 */
+	/*function sku_vars_cleaner_sanitize_options( $options ) {
+		$clean_options = array();
+		$old_options = get_option( SWS_VAR_CLEANER_OPTIONS_GROUP );
+		pr($old_options); exit;
+		if ( ! empty( $_FILES['sws-preloader-custom-file']['tmp_name'] ) ) {
+			$overrides = array( 'test_form' => false );
+			$file = wp_handle_upload( $_FILES['sws-preloader-custom-file'], $overrides );
+			$clean_options['url'] = $file['url'];
+			$clean_options['file'] = $file['file'];
+
+		} else {
+			
+			
+			if ( ! empty( $old_options['url'] ) && ! empty( $old_options['file'] ) ) {
+				$clean_options['url'] = $old_options['url'];
+				$clean_options['file'] = $old_options['file'];
+			}
+
+		}
+
+		foreach ( $options as $key => $value ) {
+			$clean_options[$key] = strip_tags( $value );
+		}
+
+		if ( $clean_options['selected-tab'] !== 'upload_a_custom' && ! empty( $clean_options['file'] ) ) {
+			unlink( $clean_options['file'] );
+			unset( $clean_options['url'] );
+			unset( $clean_options['file'] );
+		} elseif ( isset( $file ) && isset( $old_options['url'] ) && $file['url'] !== $old_options['url'] ) {
+			unlink( $old_options['file'] );
+		}
+
+		return $clean_options;
+	}*/
+
+	/**
+	 * Add the new tab to the woocommerce pop-ip
+	 *
+	 * @return void
 	 */
 	function sku_variations_cleaner_page() {
 		include SWS_VAR_CLEANER_TEMPLATE_PATH . "main_settings.php";
