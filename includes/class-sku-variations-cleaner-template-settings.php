@@ -159,6 +159,11 @@ class SKU_Variations_Cleaner_Template_Settings {
 
 		$html .= '<h2 class="dashicons-before dashicons-admin-generic options_icon">WooCommerce SKU Variations Cleaner SWS Settings</h2>' . "\n";
 
+		// Update message
+		if ( isset( $_REQUEST['settings-updated'] ) ) {
+			$html .= '<div class="updated"><p><strong>' . __( 'Options successfully updated!' ) . '</strong></p></div>' . "\n";
+		}
+
 		$html .= '<form method="post" action="options.php" enctype="multipart/form-data" class="wc_sku_cleaner">' . "\n";
 
 		$html .= '<table class="form-table">' . "\n";
