@@ -14,7 +14,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'SWS_VAR_CLEANER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SWS_VAR_CLEANER_PLUGIN_PATH', plugin_dir_url(__FILE__) );
 
 // Load plugin class files
 require_once( 'includes/class-sku-variations-cleaner-template.php' );

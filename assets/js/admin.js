@@ -1,23 +1,22 @@
 jQuery(document).ready(function($){
 
 	// Ajax Search Variations
-	$('search_vars').on('click', function(event) {
+	$('.search_vars').on('click', function(event) {
 		event.preventDefault();
-
-		//var catName = $(this).val();
+console.log('test');
 		var $resultContainer = $('.search_result');
 
 		$.ajax({
 			type: "POST",
 			data: {
 				action: 'search_old_vars',
-				//catName: catName
 			},
 			url: sku_vars_cleaner_ajaxUrl.url,
 			beforeSend: function(){
-				$resultContainer.text('Loading...');
+				$('.loader_img').fadeIn();
 			},
 			success: function(data){
+				$('.loader_img').fadeOut();
 				$resultContainer.text('');
 
 				if(data.length > 1){

@@ -168,7 +168,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 
 		$html .= '<table class="form-table">' . "\n";
 
-		$html .= '<tr><th scope="row">' . __( 'Search old product variations' ) . '<p class="description">' . __( 'Click Start search button to start the search of old variations.' ) . '</p></th><td><a href="" class="button button-primary search_vars">' . __( 'Start search old variations' ) . '</a><div class="search_result"></div></td></tr>' . "\n";
+		$html .= '<tr><th scope="row">' . __( 'Search old product variations' ) . '<p class="description">' . __( 'Click Start search button to start the search of old variations.' ) . '</p></th><td><a href="" class="button button-primary search_vars">' . __( 'Start search old variations' ) . '</a><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading..."><div class="search_result"></div></td></tr>' . "\n";
 
 		$html .= '<tr><th scope="row">' . __( 'Bulk delete' ) . '<p class="description">' . __( 'Simultaneous removal of all the old variables or cleaning not relevant SKU numbers.' ) . '</p></th><td><a href="" class="button button-primary">' . __( 'Clean SKU fields of old variations' ) . '</a><hr class="cleaner_divider"><a href="" class="button button-primary">' . __( 'Delete the traces of the old variations fully' ) . '</a><p class="description">' . __( 'This operation cannot be undone. Please backup your database if you are unsure.' ) . '</p></td></tr>' . "\n";
 

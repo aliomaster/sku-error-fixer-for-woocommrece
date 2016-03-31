@@ -20,6 +20,7 @@
 	margin-bottom: 8px;
 }
 
-.wc_sku_cleaner .search_result {
-	background: url('../img/loader.gif') no-repeat;
+.loader_img {
+	margin-left: 8px;
+	display: none;
 }
