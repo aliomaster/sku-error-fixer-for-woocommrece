@@ -27,13 +27,13 @@ require_once( 'includes/lib/class-sku-variations-cleaner-admin-api.php' );
 require_once( 'includes/ajax-functions.php' );
 
 // helper developer function
-if ( ! function_exists( 'pr' ) ) {
+/*if ( ! function_exists( 'pr' ) ) {
 	function pr($val) {
 		echo '<pre>';
 		print_r($val);
 		echo '</pre>';
 	}
-}
+}*/
 
 /**
  * Returns the main instance of SKU_Variations_Cleaner to prevent the need to use globals.

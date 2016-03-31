@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
 	// Ajax Search Variations
 	$('.search_vars').on('click', function(event) {
 		event.preventDefault();
-console.log('test');
+
 		var $resultContainer = $('.search_result');
 
 		$.ajax({
@@ -21,8 +21,18 @@ console.log('test');
 
 				if(data.length > 1){
 					$resultContainer.html(data);
+					$resultContainer.fadeIn(2000);
 				}
 			}
 		});
 	});
+
+	$('.show_results').on('click', function(event) {
+		event.preventDefault();
+		if ($('.needless_child_list').size() > 0) {
+			console.log('test');
+			$('.needless_child_list').fadeIn(2000);
+		}
+	});
+
 }); // jQuery end

@@ -24,3 +24,11 @@
 	margin-left: 8px;
 	display: none;
 }
+
+.needless_child_list {
+	display: none;
+}
+
+.search_result {
+	display: none;
+}
