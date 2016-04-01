@@ -14,6 +14,10 @@
 	margin: 20px 0 20px;
 }
 
+.wc_sku_cleaner table.form-table th {
+	padding: 10px 0px;
+}
+
 .wc_sku_cleaner table.form-table:last-of-type label[for^=auto_clean] {
 	float: left;
 	clear: both;
@@ -31,4 +35,16 @@
 
 .search_result {
 	display: none;
+}
+
+.result_td {
+	vertical-align: top;
+}
+
+.search_delete_section .description {
+	font-size: 14px;
+}
+
+.search_delete_section h2 {
+	margin: 24px 0 6px;
 }

@@ -40,8 +40,8 @@ function search_old_vars() {
 	}
 
 	if ( $needless_childs ) {
-		$result = '<h2 class="found_results_heading">Found ' . count( $needless_childs ) . ' old variations on your website:</h2>';
-		$result .= 'You can <a href="" class="show_results">Show details</a>';
+		$result = '<h2 class="found_results_heading">Found ' . count( $needless_childs ) . ' old variations on your website.</h2>';
+		$result .= '<a href="" class="show_results">Show list</a>';
 		$result .= '<ul class="needless_child_list">';
 		foreach ( $needless_childs as $needless_child ) {
 			$result .= '<li>' . $needless_child . '</li>';
