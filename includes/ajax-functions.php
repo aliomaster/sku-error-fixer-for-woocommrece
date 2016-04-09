@@ -1,11 +1,12 @@
 <?php
 
 // Ajax search old vars
-add_action( 'wp_ajax_nopriv_search_old_vars', 'search_old_vars' );
-add_action( 'wp_ajax_search_old_vars', 'search_old_vars' );
-function search_old_vars() {
+add_action( 'wp_ajax_nopriv_cleaning_old_vars', 'cleaning_old_vars' );
+add_action( 'wp_ajax_cleaning_old_vars', 'cleaning_old_vars' );
+function cleaning_old_vars() {
 	$result = '';
 	$needless_childs = array();
+	$key = ( $_POST['key'] ) ? $_POST['key'] : false;
 
 	global $wpdb;
 	$wpdb->show_errors( true );
@@ -26,43 +27,80 @@ function search_old_vars() {
 		}
 	}
 
-	$needless_childs = array();
 	if ( $all_no_vars && is_array( $all_no_vars ) ) {
 		foreach ( $all_no_vars as $no_var_id ) {
-			$childs = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='%s' AND post_parent='%s'", 'product_variation', $no_var_id ) );
+			$childs = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='%s' AND post_parent='%s'", 'product_variation', $no_var_id ) );
 
 			if ( $childs && is_array( $childs ) ) {
 				foreach ( $childs as $child_item ) {
-					$needless_childs[$child_item->ID] = get_the_title( $child_item->ID );
+					if ( $sku = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='%s' AND post_id='%s' LIMIT 1", '_sku', $child_item->ID ) ) ) {
+						$needless_childs[$child_item->ID]['sku'] = $sku;
+					}
+					$needless_childs[$child_item->ID]['title'] = $child_item->post_title;
 				}
 			}
 		}
 	}
 
-	if ( $needless_childs ) {
+	if ( $needless_childs && !$key ) {
 		$result = '<h2 class="found_results_heading">Found ' . count( $needless_childs ) . ' old variations on your website.</h2>';
-		$result .= '<a href="" class="show_results">Show list</a>';
+		$result .= '<span class="show_results">Show list<i></i></span>';
 		$result .= '<ul class="needless_child_list">';
 		foreach ( $needless_childs as $needless_child ) {
-			$result .= '<li>' . $needless_child . '</li>';
+			if ( $needless_child['title'] ) {
+				$sku = ( $needless_child['sku'] ) ? ' ( with SKU <strong>' . $needless_child['sku'] . '</strong>)' : '';
+				$result .= '<li>' . $needless_child['title'] . $sku . '</li>';
+			}
 		}
 		$result .= '</ul>';
+	} elseif ( $needless_childs && $key == 'clean' ) {
+		$deleted = 0;
+		$deleted_items = array();
+		foreach ( $needless_childs as $post_id => $value ) {
+			$sku = ( $value['sku'] ) ? 'SKU <strong>"' . $value['sku'] . '"</strong> of ' . $value['title'] : '<strong>Empty SKU field</strong> of ' . $value['title'];
+			$del_sku = $wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_sku', 'post_id' => $post_id ) );
+			if ( $del_sku == 1 ) {
+				$deleted_items[] = $sku;
+				$deleted++;
+			}
+		}
+		if ( $deleted == count( $deleted_items ) && $deleted != 0 ) {
+			$result = '<h2 class="found_results_heading">' . $deleted . ' SKU fields have been successfully removed.</h2>';
+			$result .= '<span class="show_results">Show list<i></i></span>';
+			$result .= '<ul class="needless_child_list">';
+			foreach ( $deleted_items as $deleted_item ) {
+				$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
+			}
+			$result .= '</ul>';
+		} elseif ( $deleted == 0 ) {
+			$result = '<h2 class="found_results_heading">SKU fields of old variations not found.</h2>';
+		} else {
+			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
+		}
+	} elseif ( $needless_childs && $key == 'removal' ) {
+		$deleted = 0;
+		$deleted_items = array();
+		foreach ( $needless_childs as $post_id => $value ) {
+			$del = wp_delete_post( $post_id, true );
+			if ( $del->ID == $post_id ) {
+				$deleted++;
+				$deleted_items[] = $value['title'];
+			}
+		}
+		if ( $deleted == count( $deleted_items ) && $deleted != 0 ) {
+			$result = '<h2 class="found_results_heading">' . $deleted . ' Old variations have been successfully removed.</h2>';
+			$result .= '<span class="show_results">Show list<i></i></span>';
+			$result .= '<ul class="needless_child_list">';
+			foreach ( $deleted_items as $deleted_item ) {
+				$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
+			}
+			$result .= '</ul>';
+		} else {
+			$result = '<h2 class="found_results_heading">Old variations not found.</h2>';
+		}
 	} else {
-		$result = '<h2 class="found_results_heading">Old variations are not found.</h2>';
+			$result = '<h2 class="found_results_heading">Old variations not found.</h2>';
 	}
-
-	/* removing fully post */
-	//$del = wp_delete_post( 14471, true );
-	//pr($del->ID); exit;
-
-	/* removing sku post */
-	//$del_sku = $wpdb->delete( 'wp_postmeta', array( 'meta_key' => '_sku', 'post_id' => 14573 ) );
-	//pr($del_sku); exit;
-
-	//pr($needless_childs); exit;
-	//$products_id = $wpdb->get_results( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='%s'", '_sku' ) );
-
-	/*внимание! Номера '#11679' из названий ненужных детей отличаются от $child_item->ID, надо перепроверить, это просто отдельные айдишки и по каким из них удалять будем!*/
 
 	echo $result;
 

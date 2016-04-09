@@ -5,34 +5,100 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 
 		var $resultContainer = $('.search_result');
+		var loaderImg = $(this).next('.loader_img');
 
 		$.ajax({
 			type: "POST",
 			data: {
-				action: 'search_old_vars',
+				action: 'cleaning_old_vars',
 			},
 			url: sku_vars_cleaner_ajaxUrl.url,
 			beforeSend: function(){
-				$('.loader_img').fadeIn();
+				loaderImg.fadeIn();
 			},
 			success: function(data){
-				$('.loader_img').fadeOut();
+				loaderImg.fadeOut();
 				$resultContainer.text('');
-
 				if(data.length > 1){
 					$resultContainer.html(data);
-					$resultContainer.fadeIn(2000);
+					$resultContainer.slideDown();
 				}
 			}
 		});
 	});
 
-	$('.show_results').on('click', function(event) {
+	$(document).on('click', '.show_results', function(event) {
 		event.preventDefault();
-		if ($('.needless_child_list').size() > 0) {
-			console.log('test');
-			$('.needless_child_list').fadeIn(2000);
+		if ($(this).next('.needless_child_list').size() > 0) {
+			$(this).next('.needless_child_list').slideToggle();
+			$(this).toggleClass('open');
+			if ($(this).hasClass('open')) {
+				$(this).html('Hide list<i></i>');
+			} else {
+				$(this).html('Show list<i></i>');
+			}
 		}
+	});
+
+
+	// Ajax Clean SKU Variations
+	$('.clean_sku').on('click', function(event) {
+		event.preventDefault();
+
+		var $resultContainer = $('.clean_result');
+		var loaderImg = $(this).next('.loader_img');
+		var key = 'clean';
+
+		$.ajax({
+			type: "POST",
+			data: {
+				action: 'cleaning_old_vars',
+				key: key,
+
+			},
+			url: sku_vars_cleaner_ajaxUrl.url,
+			beforeSend: function(){
+				loaderImg.fadeIn();
+			},
+			success: function(data){
+				loaderImg.fadeOut();
+				$resultContainer.text('');
+				if(data.length > 1){
+					$resultContainer.html(data);
+					$resultContainer.slideDown();
+				}
+			}
+		});
+	});
+
+	// Ajax Removal Variations
+	$('.removal_vars').on('click', function(event) {
+		event.preventDefault();
+
+		var $resultContainer = $('.removal_result');
+		var loaderImg = $(this).next('.loader_img');
+		var key = 'removal';
+
+		$.ajax({
+			type: "POST",
+			data: {
+				action: 'cleaning_old_vars',
+				key: key,
+
+			},
+			url: sku_vars_cleaner_ajaxUrl.url,
+			beforeSend: function(){
+				loaderImg.fadeIn();
+			},
+			success: function(data){
+				loaderImg.fadeOut();
+				$resultContainer.text('');
+				if(data.length > 1){
+					$resultContainer.html(data);
+					$resultContainer.slideDown();
+				}
+			}
+		});
 	});
 
 }); // jQuery end

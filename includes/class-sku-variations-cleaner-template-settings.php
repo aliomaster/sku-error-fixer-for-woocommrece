@@ -98,8 +98,8 @@ class SKU_Variations_Cleaner_Template_Settings {
 					'type' => 'radio',
 					'options' => array(
 						'default' => 'Default (not clean)',
-						'auto_del_fully' => 'Automatically delete old variations',
-						'auto_del_sku' => 'Automatically clean old skus of variables'
+						'auto_del_fully' => 'Automatically remove old variations',
+						'auto_del_sku' => 'Automatically remove old SKUs of variables'
 					),
 					'default' => 'default',
 				),
@@ -173,10 +173,19 @@ class SKU_Variations_Cleaner_Template_Settings {
 				<h2>' . __( 'Search old product variations' ) . '</h2>
 				<p class="description">' . __( 'Click Start search button to start the search of old variations.' ) . '</p>
 				<a href="" class="button button-primary search_vars">' . __( 'Start search old variations' ) . '</a>
+				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading...">
+				<div class="search_result"></div>
 			</td>
-			<td rowspan="4" class="result_td">
-				<div class="search_result"><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading..."></div>
-			</td>
+			<td rowspan="3" class="automatically_settings_section"><div>' . "\n";
+				// Get settings fields
+			ob_start();
+			settings_fields( $this->parent->_token . '_settings' );
+			do_settings_sections( $this->parent->_token . '_settings' );
+			$html .= ob_get_clean();
+			$html .= '<p class="submit">' . "\n";
+				$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings'  ) ) . '" />' . "\n";
+			$html .= '</p>' . "\n";
+			$html .= '</div></td>
 		</tr>' . "\n";
 
 		$html .= '<tr>
@@ -188,28 +197,17 @@ class SKU_Variations_Cleaner_Template_Settings {
 
 		$html .= '<tr>
 			<td>
-				<a href="" class="button button-primary">' . __( 'Clean SKU fields of old variations' ) . '</a>
+				<a href="" class="button button-primary clean_sku">' . __( 'Delete only SKU fields of old variations' ) . '</a>
+				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading...">
+				<div class="clean_result"></div>
 				<hr class="cleaner_divider">
-				<a href="" class="button button-primary">' . __( 'Delete the traces of the old variations fully' ) . '</a>
+				<a href="" class="button button-primary removal_vars">' . __( 'Delete old variations fully' ) . '</a><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading...">
 				<p class="description">' . __( 'This operation cannot be undone. Please backup your database if you are unsure.' ) . '</p>
+				<div class="removal_result"></div>
 			</td>
 		</tr>' . "\n";
 
-		$html .= '<tr>
-			<td class="automatically_settings_section">' . "\n";
-				// Get settings fields
-			ob_start();
-			settings_fields( $this->parent->_token . '_settings' );
-			do_settings_sections( $this->parent->_token . '_settings' );
-			$html .= ob_get_clean();
-		$html .= '</td></tr>' . "\n";
-
 		$html .= '</table>' . "\n";
-
-
-		$html .= '<p class="submit">' . "\n";
-			$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings'  ) ) . '" />' . "\n";
-		$html .= '</p>' . "\n";
 		$html .= '</form>' . "\n";
 		$html .= '</div>' . "\n";
 
