@@ -5,7 +5,7 @@
  *
  * Uninstalling plugin deletes options.
  *
- * @package WordPress
+ * @package     WordPress
  * @author      Alio Master (SWS - SpaceWorkSpace)
  * @version     1.0.0
  */

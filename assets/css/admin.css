@@ -96,7 +96,12 @@ form.wc_sku_cleaner {
 	margin: 24px 0 6px;
 }
 
+.search_td {
+	width: 50%;
+}
+
 .automatically_settings_section {
+	width: 50%;
 	padding: 0;
 }
 
@@ -108,4 +113,15 @@ form.wc_sku_cleaner {
 .search_delete_section td {
 	padding: 5px;
 	vertical-align: top;
+}
+
+.auto_clean_result {
+	margin: 10px;
+	font-style: italic;
+	font-weight: bold;
+	color: #008200;
+}
+
+.auto_clean_result i {
+	color: #000;
 }

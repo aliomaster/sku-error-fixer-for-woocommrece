@@ -25,6 +25,7 @@ require_once( 'includes/lib/class-sku-variations-cleaner-admin-api.php' );
 
 // Load functions
 require_once( 'includes/ajax-functions.php' );
+require_once( 'includes/main-functions.php' );
 
 // helper developer function
 /*if ( ! function_exists( 'pr' ) ) {

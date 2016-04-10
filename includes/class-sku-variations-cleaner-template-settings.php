@@ -169,7 +169,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 		$html .= '<table class="search_delete_section">' . "\n";
 
 		$html .= '<tr>
-			<td scope="row">
+			<td scope="row" class="search_td">
 				<h2>' . __( 'Search old product variations' ) . '</h2>
 				<p class="description">' . __( 'Click Start search button to start the search of old variations.' ) . '</p>
 				<a href="" class="button button-primary search_vars">' . __( 'Start search old variations' ) . '</a>
