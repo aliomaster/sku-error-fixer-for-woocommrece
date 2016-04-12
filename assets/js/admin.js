@@ -101,8 +101,9 @@ jQuery(document).ready(function($){
 		});
 	});
 
-	// Ajax on change SKU
-	$(document.body).on('change', 'input[name^="variable_sku"]', function(event) {
+//Variations #6787576, #6745464, #647646, #32321, #757656, #656745, #6787576, #6745464, #647646, #32321, #757656, #656745 will be removed.
+	// Ajax on change Product Type
+	/*$(document.body).on('change', '#product-type', function(event) {
 		if ( $('.auto_clean_result').size() > 0 ) {
 			$('.auto_clean_result').remove();
 		}
@@ -130,6 +131,6 @@ jQuery(document).ready(function($){
 				}
 			}
 		});
-	});
+	});*/
 
 }); // jQuery end

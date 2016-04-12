@@ -54,7 +54,7 @@ form.wc_sku_cleaner {
 	cursor: pointer;
 }
 
-.warning {
+.warning, .auto_clean_result {
 	color: #cc0000;
 }
 
@@ -116,10 +116,10 @@ form.wc_sku_cleaner {
 }
 
 .auto_clean_result {
-	margin: 10px;
+	padding: 10px;
+	display: inline-block;
 	font-style: italic;
 	font-weight: bold;
-	color: #008200;
 }
 
 .auto_clean_result i {

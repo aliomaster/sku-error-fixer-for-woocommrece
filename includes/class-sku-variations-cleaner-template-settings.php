@@ -93,13 +93,13 @@ class SKU_Variations_Cleaner_Template_Settings {
 			'fields' => array(
 				array(
 					'id' => 'auto_clean',
-					'label' => 'When I change the product type to Simple from Variable:',
+					'label' => 'When I change the product type from Variable to other and Save it:',
 					'description' => __( '' ),
 					'type' => 'radio',
 					'options' => array(
 						'default' => 'Default (not clean)',
-						'auto_del_fully' => 'Automatically remove old variations',
-						'auto_del_sku' => 'Automatically remove old SKUs of variables'
+						'auto_del_fully' => 'Automatically remove old variations of this product',
+						'auto_del_sku' => 'Automatically clean SKU fields of old variations of this product'
 					),
 					'default' => 'default',
 				),
