@@ -81,42 +81,41 @@ add_action( 'wp_ajax_nopriv_auto_change_cleaning', 'auto_change_cleaning' );
 add_action( 'wp_ajax_auto_change_cleaning', 'auto_change_cleaning' );
 
 function auto_change_cleaning() {
-	$result = 'unique!';
+	$result = '';
 	$needless_childs = get_needless_childs();
-	$shanged_sku = ( $_POST['sku'] ) ? $_POST['sku'] : false;
-	$same_sku_post = '';
+	$post_ID = ( $_POST['postID'] ) ? $_POST['postID'] : false;
+	$for_clean_childs = '';
 	$auto_clean_option = get_option( 'alio_auto_clean' );
+	$settings_link = '<a href="admin.php?page=sku_vars_cleaner_settings" class="settings_lnk"></a>';
 
-	global $wpdb;
-	$wpdb->show_errors( true );
+	if ( $post_ID ) {
+		global $wpdb;
+		$wpdb->show_errors( true );
 
-	if ( $needless_childs && is_array( $needless_childs ) ) {
-		foreach ( $needless_childs as $key => $value ) {
-
-			if( $value['sku'] == $shanged_sku ) {
-				$same_sku_post = $key;
+		$this_variations = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_parent='%s'", $post_ID ) );
+		if ( $this_variations && is_array( $this_variations ) ) {
+			foreach ( $this_variations as $var ) {
+				$for_clean_childs[] = '#' . $var->ID;
 			}
 		}
 	}
 
-	if ( $auto_clean_option != 'default' && $same_sku_post ) {
+	if ( $for_clean_childs && is_array( $for_clean_childs ) ) {
+		if ( count( $for_clean_childs ) > 1 ) {
+			$for_clean_childs = implode( ', ', $for_clean_childs );
+		} else {
+			$for_clean_childs = $for_clean_childs[0];
+		}
+	}
+
+	if ( $auto_clean_option != 'default' && $for_clean_childs ) {
 
 		if ( $auto_clean_option == 'auto_del_sku' ) {
-			if( $wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $same_sku_post ) ) ) {
-				$result = 'unique!';
-			} else {
-				$result = 'sku not unique!';
-			}
+			$result = 'SKU of variations ' . $for_clean_childs . ' will be cleared ' . $settings_link;
 		}
 		if ( $auto_clean_option == 'auto_del_fully' ) {
-			if( wp_delete_post( $same_sku_post, true ) ) {
-				$result = 'unique!';
-			} else {
-				$result = 'sku not unique!';
-			}
+			$result = 'Variaions ' . $for_clean_childs . ' will be removed ' . $settings_link;
 		}
-	} elseif ( $auto_clean_option == 'default' && $same_sku_post ) {
-		$result = 'sku not unique! <a href="admin.php?page=sku_vars_cleaner_settings" target="_blank">settings</a>';
 	}
 
 	echo $result;

@@ -117,11 +117,23 @@ form.wc_sku_cleaner {
 
 .auto_clean_result {
 	padding: 10px;
-	display: inline-block;
+	display: block;
 	font-style: italic;
 	font-weight: bold;
 }
 
 .auto_clean_result i {
 	color: #000;
+}
+
+.settings_lnk {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	opacity: .7;
+	background: url('../img/ico_setting.png');
+}
+
+.settings_lnk:hover {
+	opacity: 1;
 }
