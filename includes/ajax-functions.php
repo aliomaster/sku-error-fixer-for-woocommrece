@@ -123,12 +123,7 @@ function auto_change_cleaning() {
 		global $wpdb;
 		$wpdb->show_errors( true );
 
-		$this_variations = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_parent='%s'", $post_ID ) );
-		if ( $this_variations && is_array( $this_variations ) ) {
-			foreach ( $this_variations as $var ) {
-				$for_clean_childs[] = '#' . $var->ID;
-			}
-		}
+		
 	}
 
 	if ( $for_clean_childs && is_array( $for_clean_childs ) ) {
