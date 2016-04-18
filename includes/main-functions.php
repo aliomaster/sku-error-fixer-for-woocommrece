@@ -24,15 +24,45 @@ function get_needless_childs() {
 
 	if ( $all_no_vars && is_array( $all_no_vars ) ) {
 		foreach ( $all_no_vars as $no_var_id ) {
-			$childs = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type='%s' AND post_parent='%s'", 'product_variation', $no_var_id ) );
+			$childs = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title, post_parent FROM $wpdb->posts WHERE post_type='%s' AND post_parent='%s'", 'product_variation', $no_var_id ) );
 
 			if ( $childs && is_array( $childs ) ) {
 				foreach ( $childs as $child_item ) {
 					if ( $sku = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='%s' AND post_id='%s' LIMIT 1", '_sku', $child_item->ID ) ) ) {
-						$needless_childs[$child_item->ID]['sku'] = $sku;
+						$needless_childs[$child_item->post_parent][$child_item->ID]['sku'] = $sku;
 					}
-					$needless_childs[$child_item->ID]['title'] = $child_item->post_title;
+					$needless_childs[$child_item->post_parent][$child_item->ID]['title'] = $child_item->post_title;
 				}
+			}
+		}
+	}
+
+	$for_ghost_posts = array();
+	$true_all_products = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title, post_parent, post_name FROM $wpdb->posts WHERE post_type='%s'", 'product_variation' ) );
+	if ( $true_all_products && is_array( $true_all_products ) ) {
+		foreach ( $true_all_products as $var_item ) {
+			if ( $var_item->post_parent ) {
+				$for_ghost_posts[$var_item->post_parent][$var_item->ID]['title'] = $var_item->post_title;
+				if ( $sku = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='%s' AND post_id='%s' LIMIT 1", '_sku', $var_item->ID ) ) ) {
+					$for_ghost_posts[$var_item->post_parent][$var_item->ID]['sku'] = $sku;
+				}
+			} else {
+				if ( $var_item->post_name ) {
+					preg_match_all( "/-([0-9]*)-/", $var_item->post_name, $return);
+					$for_ghost_posts[$return[1][0]][$var_item->ID]['title'] = $var_item->post_title;
+					if ( $sku = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='%s' AND post_id='%s' LIMIT 1", '_sku', $var_item->ID ) ) ) {
+						$for_ghost_posts[$return[1][0]][$var_item->ID]['sku'] = $sku;
+					}
+				}
+			}
+		}
+	}
+
+	$ghost_posts = array();
+	if ( $for_ghost_posts && is_array( $for_ghost_posts ) ) {
+		foreach ( $for_ghost_posts as $post_id => $data ) {
+			if ( ! $post_title = $wpdb->get_var( $wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE ID='%s' LIMIT 1", $post_id ) ) ) {
+				$needless_childs[$post_id] = $data;
 			}
 		}
 	}
