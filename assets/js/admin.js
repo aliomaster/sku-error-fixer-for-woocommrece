@@ -102,10 +102,7 @@ jQuery(document).ready(function($){
 	});
 
 	// Ajax on change Product Type
-	if ( $( '#product-type' ).size() > 0 && $( 'optgroup' ) ) {
-		expression
-	}
-	$( '#product-type' ).on('change', function(event) {
+/*	$( '#product-type' ).on('change', function(event) {
 		if ( $(this).val != 'variable' ) {
 			console.log($(this).val);
 			if ( $('.auto_clean_result').size() > 0 ) {
@@ -136,6 +133,37 @@ jQuery(document).ready(function($){
 			});
 		}
 		
-	});
+	});*/
+
+	// Ajax on change SKU
+	/*$(document.body).on('change', 'input[name^="variable_sku"]', function(event) {
+		if ( $('.auto_clean_result').size() > 0 ) {
+			$('.auto_clean_result').remove();
+		}
+		$(this).prev('label').append('<span class="auto_clean_result"></span>');
+		$resultContainer = $('.auto_clean_result');
+		var changing_input = $(this);
+		var sku = $(this).val();
+
+		$.ajax({
+			type: "POST",
+			data: {
+				action: 'auto_change_cleaning',
+				sku: sku,
+
+			},
+			url: sku_vars_cleaner_ajaxUrl.url,
+			beforeSend: function(){
+				$resultContainer.html('<i>loading...</i>');
+			},
+			success: function(data){
+				$resultContainer.text('');
+				if(data.length > 1){
+					$resultContainer.html(data);
+					changing_input.val('lol')
+				}
+			}
+		});
+	});*/
 
 }); // jQuery end
