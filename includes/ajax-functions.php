@@ -112,20 +112,18 @@ add_action( 'wp_ajax_nopriv_auto_change_cleaning', 'auto_change_cleaning' );
 add_action( 'wp_ajax_auto_change_cleaning', 'auto_change_cleaning' );
 
 function auto_change_cleaning() {
-	$result = '';
+	$result = "Unique!";
 	$needless_childs = get_needless_childs();
 	$post_ID = ( $_POST['postID'] ) ? $_POST['postID'] : false;
 	$sku = ( $_POST['sku'] ) ? $_POST['sku'] : false;
-	$for_clean_childs = '';
-	$auto_clean_option = get_option( 'auto_clean_sku' );
-	$settings_link = '<a href="admin.php?page=sku_vars_cleaner_settings" class="settings_lnk"></a>';
-
+	$auto_clean_option = get_option( 'alio_auto_clean_sku' );
+	$deleting_counter = 0;
+	$settings_link = '<a href="admin.php?page=sku_vars_cleaner_settings" class="settings_lnk" terget="_blank"></a>';
 	if ( $post_ID ) {
 		global $wpdb;
 		$wpdb->show_errors( true );
 
 		$the_same = array();
-		$needless_childs = get_needless_childs();
 		if ( $needless_childs && is_array( $needless_childs ) ) {
 			foreach ( $needless_childs as $parent_id => $childs ) {
 				if ( is_array( $childs ) ) {
@@ -138,20 +136,18 @@ function auto_change_cleaning() {
 			}
 		}
 	}
-		pr($the_same); exit;
 
-	if ( $for_clean_childs && is_array( $for_clean_childs ) ) {
-		if ( count( $for_clean_childs ) > 1 ) {
-			$for_clean_childs = implode( ', ', $for_clean_childs );
-		} else {
-			$for_clean_childs = $for_clean_childs[0];
-		}
-	}
-
-	if ( $auto_clean_option == 'auto_clean_sku' && $for_clean_childs ) {
+	if ( $auto_clean_option == 'clean_sku' && $the_same ) {
 		foreach ( $the_same as $remove_id ) {
-			$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $remove_id ) );
+			if ( $wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $remove_id ) ) ) {
+				$deleting_counter++;
+			}
 		}
+		if ( $deleting_counter == count( $the_same ) ) {
+			$result = "Unique!";
+		}
+	} elseif ( $auto_clean_option == 'default' && $the_same ) {
+		$result = 'Not unique SKU! The number coincides with the SKU of old variations. '. $settings_link;
 	}
 
 	echo $result;

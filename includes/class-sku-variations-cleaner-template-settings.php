@@ -93,24 +93,13 @@ class SKU_Variations_Cleaner_Template_Settings {
 			'fields' => array(
 				array(
 					'id' => 'auto_clean',
-					'label' => 'When I change a product type from Variable to other and Save it:',
+					'label' => 'When the entered SKU number coincides with the SKU of old variations:',
 					'description' => __( '' ),
 					'type' => 'radio',
 					'options' => array(
 						'default' => 'Default (not clean)',
-						'auto_del_fully' => 'Automatically remove old variations of this product',
-						'auto_del_sku' => 'Automatically clean SKU fields of old variations of this product'
-					),
-					'default' => 'default',
-				),
-				array(
-					'id' => 'auto_clean_sku',
-					'label' => 'When I fill a SKU field of a product:',
-					'description' => __( '' ),
-					'type' => 'radio',
-					'options' => array(
-						'default' => 'Default',
-						'clean_sku' => 'Automatically scan & removing existing from old variations SKU fields'
+						'auto_del_fully' => 'Automatically remove old variations with this SKU nubmer',
+						'auto_del_sku' => 'Automatically clear matches SKU fields of old variations',
 					),
 					'default' => 'default',
 				),
@@ -131,7 +120,6 @@ class SKU_Variations_Cleaner_Template_Settings {
 		if ( is_array( $this->settings ) ) {
 
 			foreach ( $this->settings as $section => $data ) {
-
 
 			// Add section to page
 			add_settings_section( $section, $data['title'], array( $this, 'settings_section' ), $this->parent->_token . '_settings' );

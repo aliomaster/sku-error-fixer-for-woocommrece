@@ -74,13 +74,12 @@ function get_needless_childs() {
 add_filter( 'wp_insert_post_data' , 'sws_auto_vars_cleaner' , '99', 2 );
 
 function sws_auto_vars_cleaner( $data , $postarr ) {
-//pr($postarr); exit;
+
 	global $wpdb;
 	$wpdb->show_errors( true );
 
 	$auto_clean_option = get_option( 'alio_auto_clean' );
 	if ( $auto_clean_option != 'default' ) {
-		//pr($postarr); exit;
 		$post_id = $postarr['ID'];
 		$product_sku = $postarr['_sku'];
 		$variable_sku = $postarr['variable_sku'];
@@ -102,10 +101,13 @@ function sws_auto_vars_cleaner( $data , $postarr ) {
 		$needless_childs = get_needless_childs();
 
 		if ( $needless_childs && is_array( $needless_childs ) ) {
-			foreach ( $needless_childs as $key => $value ) {
-
-				if( $same_sku = array_search( $value['sku'], $post_skus ) ) {
-					$the_same[] = $key;
+			foreach ( $needless_childs as $parent_id => $childs_arr ) {
+				if ( is_array( $childs_arr ) ) {
+					foreach ( $childs_arr as $post_id => $info ) {
+						if( $same_sku = array_search( $info['sku'], $post_skus ) ) {
+							$the_same[] = $post_id;
+						}
+					}
 				}
 			}
 		}

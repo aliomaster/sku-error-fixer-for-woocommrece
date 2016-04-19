@@ -116,7 +116,7 @@ form.wc_sku_cleaner {
 }
 
 .auto_clean_result {
-	padding: 10px;
+	padding: 5px 0;
 	display: block;
 	font-style: italic;
 	font-weight: bold;

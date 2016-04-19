@@ -19,14 +19,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  */
 
 $auto_clean_option = get_option( 'alio_auto_clean' );
-$auto_clean_sku_option = get_option( 'alio_auto_clean_sku' );
 $version_option = get_option( 'sku_vars_cleaner_version' );
 
 if ( isset( $auto_clean_option) ) {
 	delete_option( 'alio_auto_clean' );
-}
-if ( isset( $auto_clean_sku_option) ) {
-	delete_option( 'alio_auto_clean_sku' );
 }
 if ( isset( $version_option) ) {
 	delete_option( 'sku_vars_cleaner_version' );

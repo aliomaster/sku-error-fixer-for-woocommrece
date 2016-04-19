@@ -110,13 +110,14 @@ jQuery(document).ready(function($){
 		$resultContainer = $( '.auto_clean_result' );
 		var changing_input = $( this );
 		var sku = $( this ).val();
+		var postID = $( 'input#post_ID' ).val();
 
 		$.ajax({
 			type: "POST",
 			data: {
 				action: 'auto_change_cleaning',
 				sku: sku,
-
+				postID: postID,
 			},
 			url: sku_vars_cleaner_ajaxUrl.url,
 			beforeSend: function(){
@@ -130,6 +131,11 @@ jQuery(document).ready(function($){
 			}
 		});
 	});
+
+	$( 'form#post' ).on( 'submit', function( e ) {
+		e.preventDefault();
+		console.log('test');
+	} );
 
 
 	// Ajax on change Product Type
