@@ -12,25 +12,42 @@ function cleaning_old_vars() {
 	$wpdb->show_errors( true );
 
 	if ( $needless_childs && !$key ) {
-		$result = '<h2 class="found_results_heading">Found ' . count( $needless_childs ) . ' old variations on your website.</h2>';
+		$cnt = 0;
+		if ( is_array( $needless_childs ) ) {
+			foreach ( $needless_childs as $value ) {
+				$cnt = $cnt + count( $value );
+			}
+		}
+		$result = '<h2 class="found_results_heading">Found ' . $cnt . ' old variations on your website.</h2>';
 		$result .= '<span class="show_results">Show list<i></i></span>';
 		$result .= '<ul class="needless_child_list">';
-		foreach ( $needless_childs as $needless_child ) {
-			if ( $needless_child['title'] ) {
-				$sku = ( $needless_child['sku'] ) ? 'SKU <strong>"' . $needless_child['sku'] . '"</strong>' : 'empty SKU field';
-				$result .= '<li>' . $needless_child['title'] . ' (with ' . $sku . ')</li>';
+		foreach ( $needless_childs as $parent => $childs ) {
+			foreach ( $childs as $child_id => $info ) {
+				if ( $info['title'] ) {
+					$sku = ( $info['sku'] ) ? 'SKU <strong>"' . $info['sku'] . '"</strong>' : 'empty SKU field';
+					$result .= '<li>' . $info['title'] . ' (with ' . $sku . ')</li>';
+				}
 			}
 		}
 		$result .= '</ul>';
 	} elseif ( $needless_childs && $key == 'clean' ) {
 		$deleted = 0;
 		$deleted_items = array();
-		foreach ( $needless_childs as $post_id => $value ) {
-			$sku = ( $value['sku'] ) ? 'SKU <strong>"' . $value['sku'] . '"</strong> of ' . $value['title'] : '<strong>Empty SKU field</strong> of ' . $value['title'];
-			$del_sku = $wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $post_id ) );
-			if ( $del_sku == 1 ) {
-				$deleted_items[] = $sku;
-				$deleted++;
+		foreach ( $needless_childs as $parent_id => $child_arr ) {
+			if ( is_array( $child_arr ) ) {
+				foreach ( $child_arr as $post_id => $info ) {
+					$sku = ( $info['sku'] ) ? 'SKU <strong>"' . $info['sku'] . '"</strong> of ' . $info['title'] : '<strong>Empty SKU field</strong> of ' . $info['title'];
+					$del_sku = $wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $post_id ) );
+					if ( $del_sku == 1 ) {
+						$deleted_items[] = $sku;
+						$deleted++;
+					} else {
+						if ( ! $sku = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='%s' AND post_id='%s' LIMIT 1", '_sku', $post_id ) ) ) {
+							$deleted_items[] = '';
+							$deleted--;
+						}
+					}
+				}
 			}
 		}
 		if ( $deleted == count( $deleted_items ) && $deleted != 0 ) {
@@ -38,25 +55,37 @@ function cleaning_old_vars() {
 			$result .= '<span class="show_results">Show list<i></i></span>';
 			$result .= '<ul class="needless_child_list">';
 			foreach ( $deleted_items as $deleted_item ) {
-				$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
+				if ( ! empty( $deleted_item ) ) {
+					$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
+				}
+				
 			}
 			$result .= '</ul>';
 		} elseif ( $deleted == 0 ) {
 			$result = '<h2 class="found_results_heading">SKU fields of old variations not found.</h2>';
+		} elseif( $deleted == -(count( $deleted_items )) ) {
+			$result = '<h2 class="found_results_heading">All the possible SKU fields were already deleted.</h2>';
 		} else {
 			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
 		}
 	} elseif ( $needless_childs && $key == 'removal' ) {
 		$deleted = 0;
 		$deleted_items = array();
-		foreach ( $needless_childs as $post_id => $value ) {
-			$del = wp_delete_post( $post_id, true );
-			if ( $del->ID == $post_id ) {
-				$deleted++;
-				$deleted_items[] = $value['title'];
+		foreach ( $needless_childs as $parent_id => $child_arr ) {
+			if ( is_array( $child_arr ) ) {
+				foreach ($child_arr as $post_id => $info) {
+					$del = wp_delete_post( $post_id, true );
+					if ( $del->ID == $post_id ) {
+						$deleted++;
+						$deleted_items[] = $info['title'];
+					} else {
+						$deleted--;
+						$deleted_items[] = $info['title'];
+					}
+				}
 			}
 		}
-		if ( $deleted == count( $deleted_items ) && $deleted != 0 ) {
+		if ( $deleted <= count( $deleted_items ) && $deleted != -(count( $deleted_items )) && $deleted != 0 ) {
 			$result = '<h2 class="found_results_heading">' . $deleted . ' Old variations have been successfully removed.</h2>';
 			$result .= '<span class="show_results">Show list<i></i></span>';
 			$result .= '<ul class="needless_child_list">';
@@ -64,8 +93,10 @@ function cleaning_old_vars() {
 				$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
 			}
 			$result .= '</ul>';
-		} else {
+		} elseif ( $deleted == -(count( $deleted_items )) ) {
 			$result = '<h2 class="found_results_heading">Old variations not found.</h2>';
+		} else {
+			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
 		}
 	} else {
 			$result = '<h2 class="found_results_heading">Old variations not found.</h2>';
@@ -76,7 +107,7 @@ function cleaning_old_vars() {
 	wp_die();
 }
 
-// Ajax search old vars
+// Ajax change clean
 add_action( 'wp_ajax_nopriv_auto_change_cleaning', 'auto_change_cleaning' );
 add_action( 'wp_ajax_auto_change_cleaning', 'auto_change_cleaning' );
 
@@ -84,21 +115,30 @@ function auto_change_cleaning() {
 	$result = '';
 	$needless_childs = get_needless_childs();
 	$post_ID = ( $_POST['postID'] ) ? $_POST['postID'] : false;
+	$sku = ( $_POST['sku'] ) ? $_POST['sku'] : false;
 	$for_clean_childs = '';
-	$auto_clean_option = get_option( 'alio_auto_clean' );
+	$auto_clean_option = get_option( 'auto_clean_sku' );
 	$settings_link = '<a href="admin.php?page=sku_vars_cleaner_settings" class="settings_lnk"></a>';
 
 	if ( $post_ID ) {
 		global $wpdb;
 		$wpdb->show_errors( true );
 
-		$this_variations = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_parent='%s'", $post_ID ) );
-		if ( $this_variations && is_array( $this_variations ) ) {
-			foreach ( $this_variations as $var ) {
-				$for_clean_childs[] = '#' . $var->ID;
+		$the_same = array();
+		$needless_childs = get_needless_childs();
+		if ( $needless_childs && is_array( $needless_childs ) ) {
+			foreach ( $needless_childs as $parent_id => $childs ) {
+				if ( is_array( $childs ) ) {
+					foreach ( $childs as $child_id => $info ) {
+						if( array_search( $sku, $info ) ) {
+							$the_same[] = $child_id;
+						}
+					}
+				}
 			}
 		}
 	}
+		pr($the_same); exit;
 
 	if ( $for_clean_childs && is_array( $for_clean_childs ) ) {
 		if ( count( $for_clean_childs ) > 1 ) {
@@ -108,13 +148,9 @@ function auto_change_cleaning() {
 		}
 	}
 
-	if ( $auto_clean_option != 'default' && $for_clean_childs ) {
-
-		if ( $auto_clean_option == 'auto_del_sku' ) {
-			$result = 'SKU of variations ' . $for_clean_childs . ' will be cleared ' . $settings_link;
-		}
-		if ( $auto_clean_option == 'auto_del_fully' ) {
-			$result = 'Variaions ' . $for_clean_childs . ' will be removed ' . $settings_link;
+	if ( $auto_clean_option == 'auto_clean_sku' && $for_clean_childs ) {
+		foreach ( $the_same as $remove_id ) {
+			$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $remove_id ) );
 		}
 	}
 

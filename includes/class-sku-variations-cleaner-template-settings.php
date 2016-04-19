@@ -93,7 +93,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 			'fields' => array(
 				array(
 					'id' => 'auto_clean',
-					'label' => 'When I change the product type from Variable to other and Save it:',
+					'label' => 'When I change a product type from Variable to other and Save it:',
 					'description' => __( '' ),
 					'type' => 'radio',
 					'options' => array(
@@ -103,7 +103,19 @@ class SKU_Variations_Cleaner_Template_Settings {
 					),
 					'default' => 'default',
 				),
+				array(
+					'id' => 'auto_clean_sku',
+					'label' => 'When I fill a SKU field of a product:',
+					'description' => __( '' ),
+					'type' => 'radio',
+					'options' => array(
+						'default' => 'Default',
+						'clean_sku' => 'Automatically scan & removing existing from old variations SKU fields'
+					),
+					'default' => 'default',
+				),
 			),
+
 		);
 
 		$settings = apply_filters( $this->parent->_token . '_settings_fields', $settings );
