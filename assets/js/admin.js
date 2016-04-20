@@ -1,13 +1,13 @@
-jQuery(document).ready(function($){
+jQuery( document ).ready( function( $ ) {
 
 	// Ajax Search Variations
-	$('.search_vars').on('click', function(event) {
+	$( '.search_vars' ).on( 'click', function( event ) {
 		event.preventDefault();
 
-		var $resultContainer = $('.search_result');
-		var loaderImg = $(this).next('.loader_img');
+		var $resultContainer = $( '.search_result' );
+		var loaderImg = $(this).next( '.loader_img' );
 
-		$.ajax({
+		$.ajax( {
 			type: "POST",
 			data: {
 				action: 'cleaning_old_vars',
@@ -16,55 +16,54 @@ jQuery(document).ready(function($){
 			beforeSend: function(){
 				loaderImg.fadeIn();
 			},
-			success: function(data){
+			success: function( data ){
 				loaderImg.fadeOut();
-				$resultContainer.text('');
-				if(data.length > 1){
-					$resultContainer.html(data);
+				$resultContainer.text( '' );
+				if( data.length > 1 ){
+					$resultContainer.html( data );
 					$resultContainer.slideDown();
 				}
 			}
 		});
 	});
 
-	$(document).on('click', '.show_results', function(event) {
+	$( document ).on( 'click', '.show_results', function( event ) {
 		event.preventDefault();
-		if ($(this).next('.needless_child_list').size() > 0) {
-			$(this).next('.needless_child_list').slideToggle();
-			$(this).toggleClass('open');
-			if ($(this).hasClass('open')) {
-				$(this).html('Hide list<i></i>');
+		if ( $( this ).next( '.needless_child_list' ).size() > 0 ) {
+			$( this ).next( '.needless_child_list' ).slideToggle();
+			$( this ).toggleClass( 'open' );
+			if ( $( this ).hasClass( 'open' ) ) {
+				$( this ).html( 'Hide list<i></i>' );
 			} else {
-				$(this).html('Show list<i></i>');
+				$( this ).html( 'Show list<i></i>' );
 			}
 		}
 	});
 
 
 	// Ajax Clean SKU Variations
-	$('.clean_sku').on('click', function(event) {
+	$( '.clean_sku' ).on( 'click', function( event ) {
 		event.preventDefault();
 
-		var $resultContainer = $('.clean_result');
-		var loaderImg = $(this).next('.loader_img');
+		var $resultContainer = $( '.clean_result' );
+		var loaderImg = $( this ).next( '.loader_img' );
 		var key = 'clean';
 
-		$.ajax({
+		$.ajax( {
 			type: "POST",
 			data: {
 				action: 'cleaning_old_vars',
 				key: key,
-
 			},
 			url: sku_vars_cleaner_ajaxUrl.url,
-			beforeSend: function(){
+			beforeSend: function() {
 				loaderImg.fadeIn();
 			},
-			success: function(data){
+			success: function( data ) {
 				loaderImg.fadeOut();
-				$resultContainer.text('');
-				if(data.length > 1){
-					$resultContainer.html(data);
+				$resultContainer.text( '' );
+				if( data.length > 1 ){
+					$resultContainer.html( data );
 					$resultContainer.slideDown();
 				}
 			}
@@ -72,36 +71,34 @@ jQuery(document).ready(function($){
 	});
 
 	// Ajax Removal Variations
-	$('.removal_vars').on('click', function(event) {
+	$( '.removal_vars' ).on( 'click', function( event ) {
 		event.preventDefault();
-
-		var $resultContainer = $('.removal_result');
-		var loaderImg = $(this).next('.loader_img');
+		var $resultContainer = $( '.removal_result' );
+		var loaderImg = $( this ).next( '.loader_img' );
 		var key = 'removal';
 
-		$.ajax({
+		$.ajax( {
 			type: "POST",
 			data: {
 				action: 'cleaning_old_vars',
 				key: key,
-
 			},
 			url: sku_vars_cleaner_ajaxUrl.url,
 			beforeSend: function(){
 				loaderImg.fadeIn();
 			},
-			success: function(data){
+			success: function( data ){
 				loaderImg.fadeOut();
-				$resultContainer.text('');
-				if(data.length > 1){
-					$resultContainer.html(data);
+				$resultContainer.text( '' );
+				if( data.length > 1 ){
+					$resultContainer.html( data );
 					$resultContainer.slideDown();
 				}
 			}
 		});
 	});
 
-	function autoCleaner(node) {
+	function autoCleaner( node ) {
 		if ( $( '.auto_clean_result' ).size() > 0 ) {
 			$( '.auto_clean_result' ).remove();
 		}
@@ -111,7 +108,7 @@ jQuery(document).ready(function($){
 		var sku = node.val();
 		var postID = $( 'input#post_ID' ).val();
 
-		$.ajax({
+		$.ajax( {
 			type: "POST",
 			data: {
 				action: 'auto_change_cleaning',
@@ -120,25 +117,25 @@ jQuery(document).ready(function($){
 			},
 			url: sku_vars_cleaner_ajaxUrl.url,
 			beforeSend: function(){
-				$resultContainer.html('<i>loading...</i>');
+				$resultContainer.html( '<i>loading...</i>' );
 			},
-			success: function(data){
-				$resultContainer.text('');
-				if(data.length > 1){
-					$resultContainer.html(data);
+			success: function( data ){
+				$resultContainer.text( '' );
+				if( data.length > 1 ){
+					$resultContainer.html( data );
 				}
 			}
 		});
 	}
 
 	// Ajax on change SKU
-	$(document.body).on('change', 'input[name^="variable_sku"]', function(e) {
-		var target = $(e.target);
-		autoCleaner(target);
+	$( document.body ).on( 'change', 'input[name^="variable_sku"]', function( e ) {
+		var target = $( e.target );
+		autoCleaner( target );
 	} );
-	$(document.body).on('change', 'input[name="_sku"]', function(e) {
-		var target = $(e.target);
-		autoCleaner(target);
+	$( document.body ).on( 'change', 'input[name="_sku"]', function( e ) {
+		var target = $( e.target );
+		autoCleaner( target );
 	} );
 
 }); // jQuery end

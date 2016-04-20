@@ -1,6 +1,9 @@
 <?php
 
-// Ajax search old vars
+/**
+ * Ajax search, clean and remove old vars
+ * 
+ */
 add_action( 'wp_ajax_nopriv_cleaning_old_vars', 'cleaning_old_vars' );
 add_action( 'wp_ajax_cleaning_old_vars', 'cleaning_old_vars' );
 function cleaning_old_vars() {
@@ -43,15 +46,15 @@ function cleaning_old_vars() {
 						$deleted++;
 					} else {
 						if ( ! $sku = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='%s' AND post_id='%s' LIMIT 1", '_sku', $post_id ) ) ) {
-							$deleted_items[] = '';
+							$deleted_items[] = '<strong>Empty SKU field</strong> of ' . $info['title'];
 							$deleted--;
 						}
 					}
 				}
 			}
 		}
-		if ( $deleted == count( $deleted_items ) && $deleted != 0 ) {
-			$result = '<h2 class="found_results_heading">' . $deleted . ' SKU fields have been successfully removed.</h2>';
+		if ( $deleted <= count( $deleted_items ) && $deleted != 0 && $deleted != -(count( $deleted_items ) ) ) {
+			$result = '<h2 class="found_results_heading">' . count( $deleted_items ) . ' SKU fields have been successfully removed.</h2>';
 			$result .= '<span class="show_results">Show list<i></i></span>';
 			$result .= '<ul class="needless_child_list">';
 			foreach ( $deleted_items as $deleted_item ) {
@@ -62,11 +65,10 @@ function cleaning_old_vars() {
 			$result .= '</ul>';
 		} elseif ( $deleted == 0 ) {
 			$result = '<h2 class="found_results_heading">SKU fields of old variations not found.</h2>';
-		} elseif( $deleted == -(count( $deleted_items )) ) {
+		} elseif( $deleted == -(count( $deleted_items ) ) ) {
 			$result = '<h2 class="found_results_heading">All the possible SKU fields were already deleted.</h2>';
 		} else {
-			$result = 'deleted = ' . $deleted . 'count deleted items = ' . count( $deleted_items );
-			//$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
+			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
 		}
 	} elseif ( $needless_childs && $key == 'removal' ) {
 		$deleted = 0;
@@ -107,10 +109,12 @@ function cleaning_old_vars() {
 	wp_die();
 }
 
-// Ajax change clean
+/**
+ * Ajax clean or removal old vars
+ * 
+ */
 add_action( 'wp_ajax_nopriv_auto_change_cleaning', 'auto_change_cleaning' );
 add_action( 'wp_ajax_auto_change_cleaning', 'auto_change_cleaning' );
-
 function auto_change_cleaning() {
 	$result = "Unique!";
 	$needless_childs = get_needless_childs();

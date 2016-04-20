@@ -1,7 +1,10 @@
 <?php
 
+/**
+ * Get all old variations
+ * @return array All old variations on these site
+ */
 function get_needless_childs() {
-
 	global $wpdb;
 	$wpdb->show_errors( true );
 
@@ -70,20 +73,20 @@ function get_needless_childs() {
 	return $needless_childs;
 }
 
-// Auto cleaner
+/*
+ * Auto clear to updating post.
+ *
+ * @link https://codex.wordpress.org/Plugin_API/Filter_Reference/wp_insert_post_data
+ */
 add_filter( 'wp_insert_post_data' , 'sws_auto_vars_cleaner' , '99', 2 );
-
 function sws_auto_vars_cleaner( $data , $postarr ) {
-
 	global $wpdb;
 	$wpdb->show_errors( true );
-
 	$auto_clean_option = get_option( 'alio_auto_clean' );
 	if ( $auto_clean_option != 'default' ) {
 		$post_id = $postarr['ID'];
 		$product_sku = $postarr['_sku'];
 		$variable_sku = $postarr['variable_sku'];
-
 		$post_skus = array();
 		$the_same = array();
 
