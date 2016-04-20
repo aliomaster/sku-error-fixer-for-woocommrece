@@ -58,7 +58,6 @@ function cleaning_old_vars() {
 				if ( ! empty( $deleted_item ) ) {
 					$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
 				}
-				
 			}
 			$result .= '</ul>';
 		} elseif ( $deleted == 0 ) {
@@ -66,7 +65,8 @@ function cleaning_old_vars() {
 		} elseif( $deleted == -(count( $deleted_items )) ) {
 			$result = '<h2 class="found_results_heading">All the possible SKU fields were already deleted.</h2>';
 		} else {
-			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
+			$result = 'deleted = ' . $deleted . 'count deleted items = ' . count( $deleted_items );
+			//$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
 		}
 	} elseif ( $needless_childs && $key == 'removal' ) {
 		$deleted = 0;
@@ -116,7 +116,7 @@ function auto_change_cleaning() {
 	$needless_childs = get_needless_childs();
 	$post_ID = ( $_POST['postID'] ) ? $_POST['postID'] : false;
 	$sku = ( $_POST['sku'] ) ? $_POST['sku'] : false;
-	$auto_clean_option = get_option( 'alio_auto_clean_sku' );
+	$auto_clean_option = get_option( 'alio_auto_clean' );
 	$deleting_counter = 0;
 	$settings_link = '<a href="admin.php?page=sku_vars_cleaner_settings" class="settings_lnk" terget="_blank"></a>';
 	if ( $post_ID ) {
@@ -137,9 +137,19 @@ function auto_change_cleaning() {
 		}
 	}
 
-	if ( $auto_clean_option == 'clean_sku' && $the_same ) {
+	if ( $auto_clean_option == 'auto_del_sku' && $the_same ) {
 		foreach ( $the_same as $remove_id ) {
 			if ( $wpdb->delete( $wpdb->postmeta, array( 'meta_key' => '_sku', 'post_id' => $remove_id ) ) ) {
+				$deleting_counter++;
+			}
+		}
+		if ( $deleting_counter == count( $the_same ) ) {
+			$result = "Unique!";
+		}
+	} elseif ( $auto_clean_option == 'auto_del_fully' && $the_same ) {
+		foreach ( $the_same as $remove_id ) {
+			$del = wp_delete_post( $remove_id, true );
+			if ( $del->ID == $post_id ) {
 				$deleting_counter++;
 			}
 		}

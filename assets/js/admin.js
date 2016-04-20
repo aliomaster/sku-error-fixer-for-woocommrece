@@ -101,15 +101,14 @@ jQuery(document).ready(function($){
 		});
 	});
 
-	// Ajax on change SKU
-	$( document.body ).on( 'change', 'input[name^="variable_sku"]', function( event ) {
+	function autoCleaner(node) {
 		if ( $( '.auto_clean_result' ).size() > 0 ) {
 			$( '.auto_clean_result' ).remove();
 		}
-		$( this ).prev( 'label' ).append( '<span class="auto_clean_result"></span>' );
+		node.prev( 'label' ).append( '<span class="auto_clean_result"></span>' );
 		$resultContainer = $( '.auto_clean_result' );
-		var changing_input = $( this );
-		var sku = $( this ).val();
+		var changing_input = node;
+		var sku = node.val();
 		var postID = $( 'input#post_ID' ).val();
 
 		$.ajax({
@@ -130,49 +129,16 @@ jQuery(document).ready(function($){
 				}
 			}
 		});
-	});
+	}
 
-	$( 'form#post' ).on( 'submit', function( e ) {
-		e.preventDefault();
-		console.log('test');
+	// Ajax on change SKU
+	$(document.body).on('change', 'input[name^="variable_sku"]', function(e) {
+		var target = $(e.target);
+		autoCleaner(target);
 	} );
-
-
-	// Ajax on change Product Type
-/*	if ( $( '#product-type' ).size() > 0 && $( 'optgroup' ) ) {
-		$( '#product-type' ).on('change', function(event) {
-			if ( $(this).val != 'variable' ) {
-				console.log($(this).val);
-				if ( $('.auto_clean_result').size() > 0 ) {
-					$('.auto_clean_result').remove();
-				}
-				$(this).parents( '.type_box' ).append( '<span class="auto_clean_result"></span>' );
-				$resultContainer = $('.auto_clean_result');
-				var changing_input = $(this);
-				var postID = $( 'input#post_ID' ).val();
-
-				$.ajax({
-					type: "POST",
-					data: {
-						action: 'auto_change_cleaning',
-						postID: postID,
-
-					},
-					url: sku_vars_cleaner_ajaxUrl.url,
-					beforeSend: function(){
-						$resultContainer.html('<i>loading...</i>');
-					},
-					success: function(data){
-						$resultContainer.text( '' );
-						if( data.length > 1 ){
-							$resultContainer.html( data );
-						}
-					}
-				});
-			}
-			
-		});
-	}*/
-	
+	$(document.body).on('change', 'input[name="_sku"]', function(e) {
+		var target = $(e.target);
+		autoCleaner(target);
+	} );
 
 }); // jQuery end
