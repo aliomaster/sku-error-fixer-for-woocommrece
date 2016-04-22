@@ -1,47 +1,59 @@
-=== WordPress Plugin Template ===
-Contributors: hlashbrooke
-Donate link: http://www.hughlashbrooke.com/donate
-Tags: wordpress, plugin, template
-Requires at least: 3.9
-Tested up to: 4.0
+=== WooCommerce Old SKU Cleaner SWS ===
+Contributors: Alio Master
+Tags: woocommerce, sku, clean
+Requires at least: 3.4.0
+Tested up to: 4.5
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This is where you craft a short, punchy description of your plugin
+Clean old variations and fix not unique SKU numbers of WooCommerce products.
 
 == Description ==
 
-This is where you can give a much longer description of your plugin that you can use to explain just how it awesome it really is.
+When you create new products in your webshop using the WooCommerce plugin, you can get the unique SKU error for your product and SKU not being saved properly. This is because in the database there are old variations of previously created products that have the same SKU number. WooCommerce SKU variations Cleaner plugin solves this problem by cleaning and/or removing old products variables and also you can setup automatic checking and fixing not unique SKU problem when you edit a product.
 
 == Installation ==
 
-Installing "WordPress Plugin Template" can be done either by searching for "WordPress Plugin Template" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Installing "WooCommerce Old SKU Cleaner SWS" can be done either by searching for "WooCommerce Old SKU Cleaner SWS" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
 1. Download the plugin via WordPress.org
-1. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
+3. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
 
-1. Description of first screenshot named screenshot-1
-2. Description of second screenshot named screenshot-2
-3. Description of third screenshot named screenshot-3
+1. Settings page - search of old variations
+2. Settings page - clean SKU fields of old variations
+3. Settings page - removal old variations
 
 == Frequently Asked Questions ==
 
-= What is the plugin template for? =
+= What is the old variations? =
 
-This plugin template is designed to help you get started with any new WordPress plugin.
+This is a former variations of the variable products when it type have been changed to Simple or another type of product not variable. WooCommerce does not remove these variations to the case you decide to change the product type on variable again. For this case variables remain intact with all fields filled in, including the SKU field.
+
+= What's the problem of old variations? =
+
+=== Clogging the database of unnecessary data ===
+
+Old variation of products is invisible. You can change the product type with variable to another, and after some time to remove this product and forget about it, but these variations will not removed. They are stored in the database and can take a lot of space.
+
+=== Unique SKU problem ===
+
+A known problem of the uniqueness of the SKU number of the product. WooCommers allows you to assign only unique SKU for product. If you used any SKU for the product variation, and then changed the product type to another, you will not be able to use the same SKU for a different product. You will receive an error "Product SKU must be unique". WooCommerce SKU variations Cleaner plugin eliminates this problem.
+
+== How do I use this plugin? ==
+
+After installing the plugin you will need to go to the plugin settings page Woocommerce > SKU Variations Cleaner, where you can to scan your site for presence of any old variations, clean them SKU fields or removal them completely. You can also setup automatic checking and fixing not unique SKU problem when you edit a product.
+
+== I've got an idea/fix for the plugin ==
+
+If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliowebdeveloper/woocommrece-sku-variations-cleaner-sws/blob/master/changelog.txt).
+
 
 == Changelog ==
 
 = 1.0 =
-* 2012-12-13
-* Initial release
-
-== Upgrade Notice ==
-
-= 1.0 =
-* 2012-12-13
+* 24.04.2016
 * Initial release

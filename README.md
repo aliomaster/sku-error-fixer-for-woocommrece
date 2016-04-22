@@ -20,12 +20,8 @@ A known problem of the uniqueness of the SKU number of the product. WooCommers a
 
 ## How do I use this plugin?
 
-After installing the plugin you will need to go to the plugin settings page Woocommerce > SKU Variations Cleaner, where you can to scan your site for presence of any old variations, clean them SKU fields or removal them completely. You can also set up automatic checking and fixing not unique SKU problem when you edit a product.
+After installing the plugin you will need to go to the plugin settings page Woocommerce > SKU Variations Cleaner, where you can to scan your site for presence of any old variations, clean them SKU fields or removal them completely. You can also setup automatic checking and fixing not unique SKU problem when you edit a product.
 
 ## I've got an idea/fix for the plugin
 
-If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliowebmaster/woocommrece-sku-variations-cleaner-sws/blob/master/changelog.txt).
-
-## This plugin is amazing! How can I ever repay you?
-
-There's no need to credit me in your code for this template, but if you would like to buy me a treat then you can [donate here](http://www.aliowebmaster.tk/donate).
+If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliowebdeveloper/woocommrece-sku-variations-cleaner-sws/blob/master/changelog.txt).
