@@ -2,10 +2,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class SKU_Variations_Cleaner_Template_Settings {
+class SKU_Error_Fixer_Template_Settings {
 
 	/**
-	 * The single instance of SKU_Variations_Cleaner_Template_Settings.
+	 * The single instance of SKU_Error_Fixer_Template_Settings.
 	 * @var 	object
 	 * @access  private
 	 * @since 	1.0.0
@@ -39,7 +39,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 	public function __construct ( $parent ) {
 		$this->parent = $parent;
 
-		$this->base = 'alio_';
+		$this->base = 'sef_';
 
 		// Initialise settings
 		add_action( 'init', array( $this, 'init_settings' ), 11 );
@@ -67,7 +67,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 	 * @return void
 	 */
 	public function add_menu_item () {
-		add_submenu_page( 'woocommerce', 'WooCommerce SKU Variations Cleaner SWS', __( 'SKU Variations Cleaner' ), 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
+		add_submenu_page( 'woocommerce', 'WooCommerce SKU Error Fixer SWS', __( 'SKU Error Fixer' ), 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
 	}
 
 	/**
@@ -88,7 +88,7 @@ class SKU_Variations_Cleaner_Template_Settings {
 	private function settings_fields () {
 
 		$settings['main'] = array(
-			'title' => 'Automatically deleting',
+			'title' => 'Automatically fix Unique SKU error',
 			'description' => '',
 			'fields' => array(
 				array(
@@ -97,11 +97,11 @@ class SKU_Variations_Cleaner_Template_Settings {
 					'description' => __( '' ),
 					'type' => 'radio',
 					'options' => array(
-						'default' => 'Default (not clean)',
-						'auto_del_fully' => 'Automatically remove old variations with this SKU nubmer',
 						'auto_del_sku' => 'Automatically clear matches SKU fields of old variations',
+						'auto_del_fully' => 'Automatically remove old variations with this SKU nubmer',
+						'default' => 'Default (not clean)',
 					),
-					'default' => 'default',
+					'default' => 'auto_del_sku',
 				),
 			),
 
@@ -157,26 +157,26 @@ class SKU_Variations_Cleaner_Template_Settings {
 		// Build page HTML
 		$html = '<div class="wrap" id="' . $this->parent->_token . '_settings">' . "\n";
 
-		$html .= '<h2 class="dashicons-before dashicons-admin-generic options_icon">WooCommerce SKU Variations Cleaner SWS Settings</h2>' . "\n";
+		$html .= '<h2 class="dashicons-before dashicons-admin-generic options-icon">WooCommerce SKU Error Fixer SWS Settings</h2>' . "\n";
 
 		// Update message
 		if ( isset( $_REQUEST['settings-updated'] ) ) {
 			$html .= '<div class="updated"><p><strong>' . __( 'Options successfully updated!' ) . '</strong></p></div>' . "\n";
 		}
 
-		$html .= '<form method="post" action="options.php" enctype="multipart/form-data" class="wc_sku_cleaner">' . "\n";
+		$html .= '<form method="post" action="options.php" enctype="multipart/form-data" class="wc-sku-cleaner">' . "\n";
 
-		$html .= '<table class="search_delete_section">' . "\n";
+		$html .= '<table class="search-delete-section">' . "\n";
 
 		$html .= '<tr>
-			<td scope="row" class="search_td">
+			<td scope="row" class="search-td">
 				<h2>' . __( 'Search old product variations' ) . '</h2>
 				<p class="description">' . __( 'Click Start search button to start the search of old variations.' ) . '</p>
-				<a href="" class="button button-primary search_vars">' . __( 'Start search old variations' ) . '</a>
-				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading...">
-				<div class="search_result"></div>
+				<a href="" class="button button-primary search-vars">' . __( 'Start search old variations' ) . '</a>
+				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
+				<div class="search-result"></div>
 			</td>
-			<td rowspan="3" class="automatically_settings_section"><div>' . "\n";
+			<td rowspan="3" class="automatically-settings-section"><div>' . "\n";
 				// Get settings fields
 			ob_start();
 			settings_fields( $this->parent->_token . '_settings' );
@@ -197,13 +197,13 @@ class SKU_Variations_Cleaner_Template_Settings {
 
 		$html .= '<tr>
 			<td>
-				<a href="" class="button button-primary clean_sku">' . __( 'Delete only SKU fields of old variations' ) . '</a>
-				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading...">
-				<div class="clean_result"></div>
-				<hr class="cleaner_divider">
-				<a href="" class="button button-primary removal_vars">' . __( 'Delete old variations fully' ) . '</a><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader_img" alt="loading...">
+				<a href="" class="button button-primary clean-sku">' . __( 'Delete only SKU fields of old variations' ) . '</a>
+				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
+				<div class="clean-result"></div>
+				<hr class="cleaner-divider">
+				<a href="" class="button button-primary removal-vars">' . __( 'Delete old variations fully' ) . '</a><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
 				<p class="description">' . __( 'This operation cannot be undone. Please backup your database if you are unsure.' ) . '</p>
-				<div class="removal_result"></div>
+				<div class="removal-result"></div>
 			</td>
 		</tr>' . "\n";
 
@@ -215,14 +215,13 @@ class SKU_Variations_Cleaner_Template_Settings {
 	}
 
 	/**
-	 * Main SKU_Variations_Cleaner_Template_Settings Instance
+	 * Main SKU_Error_Fixer_Template_Settings Instance
 	 *
-	 * Ensures only one instance of SKU_Variations_Cleaner_Template_Settings is loaded or can be loaded.
+	 * Ensures only one instance of SKU_Error_Fixer_Template_Settings is loaded or can be loaded.
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @see WordPress_Plugin_Template()
-	 * @return Main SKU_Variations_Cleaner_Template_Settings instance
+	 * @return Main SKU_Error_Fixer_Template_Settings instance
 	 */
 	public static function instance ( $parent ) {
 		if ( is_null( self::$_instance ) ) {

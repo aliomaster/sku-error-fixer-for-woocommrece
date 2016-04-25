@@ -1,4 +1,4 @@
-*** WooCommerce Old SKU Cleaner SWS Changelog ***
+*** WooCommerce SKU Error Fixer SWS Changelog ***
 
 24.04.2016 - version 1.0.0
  * Initial release

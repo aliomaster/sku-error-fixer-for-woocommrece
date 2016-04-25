@@ -2,10 +2,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class SKU_Variations_Cleaner_Template {
+class SKU_Error_Fixer_Template {
 
 	/**
-	 * The single instance of SKU_Variations_Cleaner_Template.
+	 * The single instance of SKU_Error_Fixer_Template.
 	 * @var 	object
 	 * @access  private
 	 * @since 	1.0.0
@@ -76,7 +76,7 @@ class SKU_Variations_Cleaner_Template {
 	 */
 	public function __construct ( $file = '', $version = '1.0.0' ) {
 		$this->_version = $version;
-		$this->_token = 'sku_vars_cleaner';
+		$this->_token = 'sku_error_fixer';
 
 		// Load plugin environment variables
 		$this->file = $file;
@@ -92,7 +92,7 @@ class SKU_Variations_Cleaner_Template {
 
 		// Load API for generic admin functions
 		if ( is_admin() ) {
-			$this->admin = new SKU_Variations_Cleaner_Template_Admin_API();
+			$this->admin = new SKU_Error_Fixer_Template_Admin_API();
 		}
 
 	} // End __construct ()
@@ -124,14 +124,14 @@ class SKU_Variations_Cleaner_Template {
 	} // End admin_enqueue_scripts ()
 
 	/**
-	 * Main SKU_Variations_Cleaner_Template Instance
+	 * Main SKU_Error_Fixer_Template Instance
 	 *
-	 * Ensures only one instance of SKU_Variations_Cleaner_Template is loaded or can be loaded.
+	 * Ensures only one instance of SKU_Error_Fixer_Template is loaded or can be loaded.
 	 *
 	 * @since 1.0.0
 	 * @static
-	 * @see SKU_Variations_Cleaner_Template()
-	 * @return Main SKU_Variations_Cleaner_Template instance
+	 * @see SKU_Error_Fixer_Template()
+	 * @return Main SKU_Error_Fixer_Template instance
 	 */
 	public static function instance ( $file = '', $version = '1.0.0' ) {
 		if ( is_null( self::$_instance ) ) {

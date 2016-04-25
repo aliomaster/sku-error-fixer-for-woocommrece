@@ -21,9 +21,9 @@ function cleaning_old_vars() {
 				$cnt = $cnt + count( $value );
 			}
 		}
-		$result = '<h2 class="found_results_heading">Found ' . $cnt . ' old variations on your website.</h2>';
-		$result .= '<span class="show_results">Show list<i></i></span>';
-		$result .= '<ul class="needless_child_list">';
+		$result = '<h2>Found ' . $cnt . ' old variations on your website.</h2>';
+		$result .= '<span class="show-results">Show list<i></i></span>';
+		$result .= '<ul class="needless-child-list">';
 		foreach ( $needless_childs as $parent => $childs ) {
 			foreach ( $childs as $child_id => $info ) {
 				if ( $info['title'] ) {
@@ -54,9 +54,9 @@ function cleaning_old_vars() {
 			}
 		}
 		if ( $deleted <= count( $deleted_items ) && $deleted != 0 && $deleted != -(count( $deleted_items ) ) ) {
-			$result = '<h2 class="found_results_heading">' . count( $deleted_items ) . ' SKU fields have been successfully removed.</h2>';
-			$result .= '<span class="show_results">Show list<i></i></span>';
-			$result .= '<ul class="needless_child_list">';
+			$result = '<h2>' . count( $deleted_items ) . ' SKU fields have been successfully removed.</h2>';
+			$result .= '<span class="show-results">Show list<i></i></span>';
+			$result .= '<ul class="needless-child-list">';
 			foreach ( $deleted_items as $deleted_item ) {
 				if ( ! empty( $deleted_item ) ) {
 					$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
@@ -64,11 +64,11 @@ function cleaning_old_vars() {
 			}
 			$result .= '</ul>';
 		} elseif ( $deleted == 0 ) {
-			$result = '<h2 class="found_results_heading">SKU fields of old variations not found.</h2>';
+			$result = '<h2>SKU fields of old variations not found.</h2>';
 		} elseif( $deleted == -(count( $deleted_items ) ) ) {
-			$result = '<h2 class="found_results_heading">All the possible SKU fields were already deleted.</h2>';
+			$result = '<h2>All the possible SKU fields were already deleted.</h2>';
 		} else {
-			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
+			$result = '<h2>Error. Please try again.</h2>';
 		}
 	} elseif ( $needless_childs && $key == 'removal' ) {
 		$deleted = 0;
@@ -88,20 +88,20 @@ function cleaning_old_vars() {
 			}
 		}
 		if ( $deleted <= count( $deleted_items ) && $deleted != -(count( $deleted_items )) && $deleted != 0 ) {
-			$result = '<h2 class="found_results_heading">' . $deleted . ' Old variations have been successfully removed.</h2>';
-			$result .= '<span class="show_results">Show list<i></i></span>';
-			$result .= '<ul class="needless_child_list">';
+			$result = '<h2>' . $deleted . ' Old variations have been successfully removed.</h2>';
+			$result .= '<span class="show-results">Show list<i></i></span>';
+			$result .= '<ul class="needless-child-list">';
 			foreach ( $deleted_items as $deleted_item ) {
 				$result .= '<li>' . $deleted_item . '<span class="warning"> deleted</span></li>';
 			}
 			$result .= '</ul>';
 		} elseif ( $deleted == -(count( $deleted_items )) ) {
-			$result = '<h2 class="found_results_heading">Old variations not found.</h2>';
+			$result = '<h2>Old variations not found.</h2>';
 		} else {
-			$result = '<h2 class="found_results_heading">Error. Please try again.</h2>';
+			$result = '<h2>Error. Please try again.</h2>';
 		}
 	} else {
-			$result = '<h2 class="found_results_heading">Old variations not found.</h2>';
+			$result = '<h2>Old variations not found.</h2>';
 	}
 
 	echo $result;
@@ -120,9 +120,9 @@ function auto_change_cleaning() {
 	$needless_childs = get_needless_childs();
 	$post_ID = ( $_POST['postID'] ) ? $_POST['postID'] : false;
 	$sku = ( $_POST['sku'] ) ? $_POST['sku'] : false;
-	$auto_clean_option = get_option( 'alio_auto_clean' );
+	$auto_clean_option = get_option( 'sef_auto_clean' );
 	$deleting_counter = 0;
-	$settings_link = '<a href="admin.php?page=sku_vars_cleaner_settings" class="settings_lnk" terget="_blank"></a>';
+	$settings_link = ' <a href="admin.php?page=sku_error_fixer_settings" class="settings-lnk" terget="_blank"></a>';
 	if ( $post_ID ) {
 		global $wpdb;
 		$wpdb->show_errors( true );
@@ -161,10 +161,10 @@ function auto_change_cleaning() {
 			$result = "Unique!";
 		}
 	} elseif ( $auto_clean_option == 'default' && $the_same ) {
-		$result = 'Not unique SKU! The number coincides with the SKU of old variations. '. $settings_link;
+		$result = 'Not unique SKU! The number coincides with the SKU of old variations.';
 	}
 
-	echo $result;
+	echo $result . $settings_link;
 
 	wp_die();
 }

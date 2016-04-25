@@ -1,18 +1,18 @@
 jQuery( document ).ready( function( $ ) {
 
 	// Ajax Search Variations
-	$( '.search_vars' ).on( 'click', function( event ) {
+	$( '.search-vars' ).on( 'click', function( event ) {
 		event.preventDefault();
 
-		var $resultContainer = $( '.search_result' );
-		var loaderImg = $(this).next( '.loader_img' );
+		var $resultContainer = $( '.search-result' );
+		var loaderImg = $(this).next( '.loader-img' );
 
 		$.ajax( {
 			type: "POST",
 			data: {
 				action: 'cleaning_old_vars',
 			},
-			url: sku_vars_cleaner_ajaxUrl.url,
+			url: sku_error_fixer_ajaxUrl.url,
 			beforeSend: function(){
 				loaderImg.fadeIn();
 			},
@@ -27,10 +27,11 @@ jQuery( document ).ready( function( $ ) {
 		});
 	});
 
-	$( document ).on( 'click', '.show_results', function( event ) {
+	$( document ).on( 'click', '.show-results', function( event ) {
 		event.preventDefault();
-		if ( $( this ).next( '.needless_child_list' ).size() > 0 ) {
-			$( this ).next( '.needless_child_list' ).slideToggle();
+		var maxW = $( '.search-td' ).width();
+		if ( $( this ).next( '.needless-child-list' ).size() > 0 ) {
+			$( this ).next( '.needless-child-list' ).css( 'max-width', maxW ).slideToggle();
 			$( this ).toggleClass( 'open' );
 			if ( $( this ).hasClass( 'open' ) ) {
 				$( this ).html( 'Hide list<i></i>' );
@@ -42,11 +43,11 @@ jQuery( document ).ready( function( $ ) {
 
 
 	// Ajax Clean SKU Variations
-	$( '.clean_sku' ).on( 'click', function( event ) {
+	$( '.clean-sku' ).on( 'click', function( event ) {
 		event.preventDefault();
 
-		var $resultContainer = $( '.clean_result' );
-		var loaderImg = $( this ).next( '.loader_img' );
+		var $resultContainer = $( '.clean-result' );
+		var loaderImg = $( this ).next( '.loader-img' );
 		var key = 'clean';
 
 		$.ajax( {
@@ -55,7 +56,7 @@ jQuery( document ).ready( function( $ ) {
 				action: 'cleaning_old_vars',
 				key: key,
 			},
-			url: sku_vars_cleaner_ajaxUrl.url,
+			url: sku_error_fixer_ajaxUrl.url,
 			beforeSend: function() {
 				loaderImg.fadeIn();
 			},
@@ -71,10 +72,10 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	// Ajax Removal Variations
-	$( '.removal_vars' ).on( 'click', function( event ) {
+	$( '.removal-vars' ).on( 'click', function( event ) {
 		event.preventDefault();
-		var $resultContainer = $( '.removal_result' );
-		var loaderImg = $( this ).next( '.loader_img' );
+		var $resultContainer = $( '.removal-result' );
+		var loaderImg = $( this ).next( '.loader-img' );
 		var key = 'removal';
 
 		$.ajax( {
@@ -83,7 +84,7 @@ jQuery( document ).ready( function( $ ) {
 				action: 'cleaning_old_vars',
 				key: key,
 			},
-			url: sku_vars_cleaner_ajaxUrl.url,
+			url: sku_error_fixer_ajaxUrl.url,
 			beforeSend: function(){
 				loaderImg.fadeIn();
 			},
@@ -99,11 +100,11 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	function autoCleaner( node ) {
-		if ( $( '.auto_clean_result' ).size() > 0 ) {
-			$( '.auto_clean_result' ).remove();
+		if ( $( '.auto-clean-result' ).size() > 0 ) {
+			$( '.auto-clean-result' ).remove();
 		}
-		node.prev( 'label' ).append( '<span class="auto_clean_result"></span>' );
-		$resultContainer = $( '.auto_clean_result' );
+		node.prev( 'label' ).append( '<span class="auto-clean-result"></span>' );
+		$resultContainer = $( '.auto-clean-result' );
 		var changing_input = node;
 		var sku = node.val();
 		var postID = $( 'input#post_ID' ).val();
@@ -115,7 +116,7 @@ jQuery( document ).ready( function( $ ) {
 				sku: sku,
 				postID: postID,
 			},
-			url: sku_vars_cleaner_ajaxUrl.url,
+			url: sku_error_fixer_ajaxUrl.url,
 			beforeSend: function(){
 				$resultContainer.html( '<i>loading...</i>' );
 			},

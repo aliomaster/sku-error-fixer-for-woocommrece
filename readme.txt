@@ -1,13 +1,13 @@
-=== WooCommerce Old SKU Cleaner SWS ===
+=== WooCommerce SKU Error Fixer SWS ===
 Contributors: Alio Master
-Tags: woocommerce, sku, clean
+Tags: woocommerce, sku, fix, sku bug, sku error
 Requires at least: 3.4.0
 Tested up to: 4.5
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Clean old variations and fix not unique SKU numbers of WooCommerce products.
+Fix not unique SKU error of WooCommerce products.
 
 == Description ==
 
@@ -15,7 +15,7 @@ When you create new products in your webshop using the WooCommerce plugin, you c
 
 == Installation ==
 
-Installing "WooCommerce Old SKU Cleaner SWS" can be done either by searching for "WooCommerce Old SKU Cleaner SWS" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Installing "WooCommerce SKU Error Fixer SWS" can be done either by searching for "WooCommerce SKU Error Fixer SWS" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
 1. Download the plugin via WordPress.org
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
@@ -45,11 +45,11 @@ A known problem of the uniqueness of the SKU number of the product. WooCommers a
 
 == How do I use this plugin? ==
 
-After installing the plugin you will need to go to the plugin settings page Woocommerce > SKU Variations Cleaner, where you can to scan your site for presence of any old variations, clean them SKU fields or removal them completely. You can also setup automatic checking and fixing not unique SKU problem when you edit a product.
+After installing the plugin you will need to go to the plugin settings page Woocommerce > SKU Error Fixer, where you can to scan your site for presence of any old variations, clean them SKU fields or removal them completely. You can also setup automatic checking and fixing not unique SKU problem when you edit a product.
 
 == I've got an idea/fix for the plugin ==
 
-If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliowebdeveloper/woocommrece-sku-variations-cleaner-sws/blob/master/changelog.txt).
+If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliowebdeveloper/woocommrece-sku-error-fixer-sws/blob/master/changelog.txt).
 
 
 == Changelog ==

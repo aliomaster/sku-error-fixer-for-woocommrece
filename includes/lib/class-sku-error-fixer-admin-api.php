@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class SKU_Variations_Cleaner_Template_Admin_API {
+class SKU_Error_Fixer_Template_Admin_API {
 
 	/**
 	 * Constructor function
