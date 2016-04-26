@@ -1,7 +1,7 @@
 <?php
 /**
 * Plugin Name: WooCommerce SKU Error Fixer SWS
-* Description: Automatic fix Unique SKU Error for your WooCommerce products.
+* Description: Plugin automaticly fixing unique SKU error for your WooCommerce products
 * Version: 1.0
 * Author: Alio Master (SWS - SpaceWorkSpace)
 * Author URI: aliowebdeveloper@gmail.com

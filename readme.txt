@@ -1,6 +1,6 @@
 === WooCommerce SKU Error Fixer SWS ===
 Contributors: Alio Master
-Tags: woocommerce, sku, fix, sku bug, sku error
+Tags: woocommerce, sku, fix, sku bug, unique sku error
 Requires at least: 3.4.0
 Tested up to: 4.5
 Stable tag: 1.0

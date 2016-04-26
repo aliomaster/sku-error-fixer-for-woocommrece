@@ -88,17 +88,17 @@ class SKU_Error_Fixer_Template_Settings {
 	private function settings_fields () {
 
 		$settings['main'] = array(
-			'title' => 'Automatically fix Unique SKU error',
+			'title' => 'Automatically fix unique SKU error',
 			'description' => '',
 			'fields' => array(
 				array(
 					'id' => 'auto_clean',
-					'label' => 'When the entered SKU number coincides with the SKU of old variations:',
+					'label' => 'When an entered SKU number coincides to the SKU of old variations:',
 					'description' => __( '' ),
 					'type' => 'radio',
 					'options' => array(
-						'auto_del_sku' => 'Automatically clear matches SKU fields of old variations',
-						'auto_del_fully' => 'Automatically remove old variations with this SKU nubmer',
+						'auto_del_sku' => 'Automatically clears matches SKU fields of old variations',
+						'auto_del_fully' => 'Automatically removes old variations with this SKU nubmer',
 						'default' => 'Default (not clean)',
 					),
 					'default' => 'auto_del_sku',
@@ -171,8 +171,8 @@ class SKU_Error_Fixer_Template_Settings {
 		$html .= '<tr>
 			<td scope="row" class="search-td">
 				<h2>' . __( 'Search old product variations' ) . '</h2>
-				<p class="description">' . __( 'Click Start search button to start the search of old variations.' ) . '</p>
-				<a href="" class="button button-primary search-vars">' . __( 'Start search old variations' ) . '</a>
+				<p class="description">' . __( 'Click Start search button to find old variations.' ) . '</p>
+				<a href="" class="button button-primary search-vars">' . __( 'Start to search old variations' ) . '</a>
 				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
 				<div class="search-result"></div>
 			</td>
@@ -191,7 +191,7 @@ class SKU_Error_Fixer_Template_Settings {
 		$html .= '<tr>
 			<td scope="row">
 				<h2>' . __( 'Bulk delete' ) . '</h2>
-				<p class="description">' . __( 'Simultaneous removal of all the old variables.' ) . '</p>
+				<p class="description">' . __( 'A simultaneously removal of all the old variations.' ) . '</p>
 			</td>
 		</tr>' . "\n";
 
@@ -202,7 +202,7 @@ class SKU_Error_Fixer_Template_Settings {
 				<div class="clean-result"></div>
 				<hr class="cleaner-divider">
 				<a href="" class="button button-primary removal-vars">' . __( 'Delete old variations fully' ) . '</a><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
-				<p class="description">' . __( 'This operation cannot be undone. Please backup your database if you are unsure.' ) . '</p>
+				<p class="description">' . __( 'This operation cannot be cancel. Please backup your database if you are not sure.' ) . '</p>
 				<div class="removal-result"></div>
 			</td>
 		</tr>' . "\n";

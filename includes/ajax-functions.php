@@ -120,7 +120,7 @@ function auto_change_cleaning() {
 	$needless_childs = get_needless_childs();
 	$post_ID = ( $_POST['postID'] ) ? $_POST['postID'] : false;
 	$sku = ( $_POST['sku'] ) ? $_POST['sku'] : false;
-	$auto_clean_option = get_option( 'sef_auto_clean' );
+	$auto_clean_option = get_option( 'sef_auto_clean', 'auto_del_sku' );
 	$deleting_counter = 0;
 	$settings_link = ' <a href="admin.php?page=sku_error_fixer_settings" class="settings-lnk" terget="_blank"></a>';
 	if ( $post_ID ) {
