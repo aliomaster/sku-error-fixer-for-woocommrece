@@ -1,20 +1,20 @@
 <?php
 /**
-* Plugin Name: WooCommerce SKU Error Fixer SWS
+* Plugin Name: SKU Error Fixer for WooCommerce
 * Description: Plugin automaticly fixing unique SKU error for your WooCommerce products
 * Version: 1.0
-* Author: Alio Master (SWS - SpaceWorkSpace)
+* Author: Alio Master
 * Author URI: aliowebdeveloper@gmail.com
 *
 *
 * @package WordPress
-* @author Alio Master (SWS - SpaceWorkSpace)
+* @author Alio Master
 * @since 1.0.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'SWS_VAR_CLEANER_PLUGIN_PATH', plugin_dir_url(__FILE__) );
+define( 'ALIO_VAR_FIXER_PLUGIN_PATH', plugin_dir_url(__FILE__) );
 
 // Load plugin class files
 require_once( 'includes/class-sku-error-fixer-template.php' );

@@ -1,4 +1,4 @@
-=== WooCommerce SKU Error Fixer SWS ===
+=== SKU Error Fixer for WooCommerce ===
 Contributors: Alio Master
 Tags: woocommerce, sku, fix, sku bug, unique sku error
 Requires at least: 3.4.0
@@ -15,7 +15,7 @@ When you creating new products in your webshop using a WooCommerce plugin, you c
 
 == Installation ==
 
-Install of "WooCommerce SKU Error Fixer SWS" can be done either by searching for "WooCommerce SKU Error Fixer SWS" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Install of "SKU Error Fixer for WooCommerce" can be done either by searching for "SKU Error Fixer for WooCommerce" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
 1. Download the plugin via WordPress.org
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
@@ -49,7 +49,7 @@ After installing the plugin you will need to go to the plugin settings page Wooc
 
 == I've got an idea/fix for the plugin ==
 
-If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliomaster/woocommrece-sku-error-fixer-sws/blob/master/changelog.txt).
+If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliomaster/sku-error-fixer-for-woocommrece/blob/master/changelog.txt).
 
 
 == Changelog ==

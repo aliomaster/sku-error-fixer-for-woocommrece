@@ -67,7 +67,7 @@ class SKU_Error_Fixer_Template_Settings {
 	 * @return void
 	 */
 	public function add_menu_item () {
-		add_submenu_page( 'woocommerce', 'WooCommerce SKU Error Fixer SWS', __( 'SKU Error Fixer' ), 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
+		add_submenu_page( 'woocommerce', 'SKU Error Fixer for WooCommerce', __( 'SKU Error Fixer' ), 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
 	}
 
 	/**
@@ -157,7 +157,7 @@ class SKU_Error_Fixer_Template_Settings {
 		// Build page HTML
 		$html = '<div class="wrap" id="' . $this->parent->_token . '_settings">' . "\n";
 
-		$html .= '<h2 class="dashicons-before dashicons-admin-generic options-icon">WooCommerce SKU Error Fixer SWS Settings</h2>' . "\n";
+		$html .= '<h2 class="dashicons-before dashicons-admin-generic options-icon">SKU Error Fixer for WooCommerce</h2>' . "\n";
 
 		// Update message
 		if ( isset( $_REQUEST['settings-updated'] ) ) {
@@ -173,7 +173,7 @@ class SKU_Error_Fixer_Template_Settings {
 				<h2>' . __( 'Search old product variations' ) . '</h2>
 				<p class="description">' . __( 'Click Start search button to find old variations.' ) . '</p>
 				<a href="" class="button button-primary search-vars">' . __( 'Start to search old variations' ) . '</a>
-				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
+				<img src="' . ALIO_VAR_FIXER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
 				<div class="search-result"></div>
 			</td>
 			<td rowspan="3" class="automatically-settings-section"><div>' . "\n";
@@ -198,10 +198,10 @@ class SKU_Error_Fixer_Template_Settings {
 		$html .= '<tr>
 			<td>
 				<a href="" class="button button-primary clean-sku">' . __( 'Delete only SKU fields of old variations' ) . '</a>
-				<img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
+				<img src="' . ALIO_VAR_FIXER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
 				<div class="clean-result"></div>
 				<hr class="cleaner-divider">
-				<a href="" class="button button-primary removal-vars">' . __( 'Delete old variations fully' ) . '</a><img src="' . SWS_VAR_CLEANER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
+				<a href="" class="button button-primary removal-vars">' . __( 'Delete old variations fully' ) . '</a><img src="' . ALIO_VAR_FIXER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
 				<p class="description">' . __( 'This operation cannot be cancel. Please backup your database if you are not sure.' ) . '</p>
 				<div class="removal-result"></div>
 			</td>

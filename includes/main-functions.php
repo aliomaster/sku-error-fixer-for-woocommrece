@@ -78,8 +78,8 @@ function get_needless_childs() {
  *
  * @link https://codex.wordpress.org/Plugin_API/Filter_Reference/wp_insert_post_data
  */
-add_filter( 'wp_insert_post_data' , 'sws_auto_vars_cleaner' , '99', 2 );
-function sws_auto_vars_cleaner( $data , $postarr ) {
+add_filter( 'wp_insert_post_data' , 'ser_auto_vars_cleaner' , '99', 2 );
+function ser_auto_vars_cleaner( $data , $postarr ) {
 	global $wpdb;
 	$wpdb->show_errors( true );
 	$auto_clean_option = get_option( 'sef_auto_clean', 'auto_del_sku' );
