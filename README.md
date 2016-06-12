@@ -1,7 +1,7 @@
 SKU Error Fixer for WooCommerce Plugin
 =============================================
 
-This plugin fixing a unique SKU error of WooCommerce products.
+This plugin fixes a unique SKU error of WooCommerce products.
 
 
 ## What is the old variations?
@@ -16,7 +16,7 @@ Old variation of products is invisible. You can change the product type with var
 
 #### Unique SKU problem
 
-A known problem of the uniqueness of the SKU number of the product. WooCommers allows you to assign only unique SKU for product. If you used any SKU for the product variation, and then changed the product type to another, you will not be able to use the same SKU for a different product. You will receive an error "Product SKU must be unique". WooCommerce SKU variations Cleaner plugin eliminates this problem.
+A known problem of the uniqueness of the SKU number of the product. WooCommers allows you to assign only unique SKU for product. If you used any SKU for the product variation, and then changed the product type to another, you will not be able to use the same SKU for a different product. You will receive an error "Product SKU must be unique". WooCommerce SKU Error Fixer plugin eliminates this problem.
 
 ## How do I use this plugin?
 

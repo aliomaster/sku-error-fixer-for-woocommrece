@@ -185,7 +185,12 @@ class SKU_Error_Fixer_Template_Settings {
 			$html .= '<p class="submit">' . "\n";
 				$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings'  ) ) . '" />' . "\n";
 			$html .= '</p>' . "\n";
-			$html .= '</div></td>
+			$html .= '</div>
+				<div class="like-plugin">
+					<h2>Do you like this plugin?</h2>
+					<p><a href="https://wordpress.org/support/view/plugin-reviews/sku-error-fixer-for-woocommerce#postform" target="_blank">Please give it a 5 star rating</a> on WordPress.org.</p>
+				</div>
+			</td>
 		</tr>' . "\n";
 
 		$html .= '<tr>

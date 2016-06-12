@@ -110,6 +110,10 @@ form.wc-sku-cleaner {
 	border: 1px solid;
 }
 
+.automatically-settings-section .like-plugin {
+	border: none;
+}
+
 .search-delete-section td {
 	padding: 5px;
 	vertical-align: top;
