@@ -99,7 +99,7 @@ class SKU_Error_Fixer_Template_Settings {
 					'options' => array(
 						'auto_del_sku' => 'Automatically clears matches SKU fields of old variations',
 						'auto_del_fully' => 'Automatically removes old variations with this SKU nubmer',
-						'default' => 'Default (not clean)',
+						'default' => 'Not clean',
 					),
 					'default' => 'auto_del_sku',
 				),
@@ -144,7 +144,7 @@ class SKU_Error_Fixer_Template_Settings {
 	}
 
 	public function settings_section ( $section ) {
-		$html = '<p> ' . $this->settings[ $section['id'] ]['description'] . '</p>' . "\n";
+		$html = '<p> ' . $this->settings[ $section['id'] ]['description'] . '</p>';
 		echo $html;
 	}
 
@@ -155,18 +155,18 @@ class SKU_Error_Fixer_Template_Settings {
 	public function settings_page () {
 
 		// Build page HTML
-		$html = '<div class="wrap" id="' . $this->parent->_token . '_settings">' . "\n";
+		$html = '<div class="wrap" id="' . $this->parent->_token . '_settings">';
 
-		$html .= '<h2 class="dashicons-before dashicons-admin-generic options-icon">SKU Error Fixer for WooCommerce</h2>' . "\n";
+		$html .= '<h2 class="dashicons-before dashicons-admin-generic options-icon">SKU Error Fixer for WooCommerce</h2>';
 
 		// Update message
 		if ( isset( $_REQUEST['settings-updated'] ) ) {
-			$html .= '<div class="updated"><p><strong>' . __( 'Options successfully updated!' ) . '</strong></p></div>' . "\n";
+			$html .= '<div class="updated"><p><strong>' . __( 'Options successfully updated!' ) . '</strong></p></div>';
 		}
 
-		$html .= '<form method="post" action="options.php" enctype="multipart/form-data" class="wc-sku-cleaner">' . "\n";
+		$html .= '<form method="post" action="options.php" enctype="multipart/form-data" class="wc-sku-cleaner">';
 
-		$html .= '<table class="search-delete-section">' . "\n";
+		$html .= '<table class="search-delete-section">';
 
 		$html .= '<tr>
 			<td scope="row" class="search-td">
@@ -176,29 +176,29 @@ class SKU_Error_Fixer_Template_Settings {
 				<img src="' . ALIO_VAR_FIXER_PLUGIN_PATH . '/assets/img/loader.gif" class="loader-img" alt="loading...">
 				<div class="search-result"></div>
 			</td>
-			<td rowspan="3" class="automatically-settings-section"><div>' . "\n";
+			<td rowspan="3" class="automatically-settings-section"><div>';
 				// Get settings fields
 			ob_start();
 			settings_fields( $this->parent->_token . '_settings' );
 			do_settings_sections( $this->parent->_token . '_settings' );
 			$html .= ob_get_clean();
-			$html .= '<p class="submit">' . "\n";
-				$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings'  ) ) . '" />' . "\n";
-			$html .= '</p>' . "\n";
+			$html .= '<p class="submit">';
+				$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings'  ) ) . '" />';
+			$html .= '</p>';
 			$html .= '</div>
 				<div class="like-plugin">
 					<h2>Do you like this plugin?</h2>
 					<p><a href="https://wordpress.org/support/view/plugin-reviews/sku-error-fixer-for-woocommerce#postform" target="_blank">Please give it a 5 star rating</a> on WordPress.org.</p>
 				</div>
 			</td>
-		</tr>' . "\n";
+		</tr>';
 
 		$html .= '<tr>
 			<td scope="row">
 				<h2>' . __( 'Bulk delete' ) . '</h2>
 				<p class="description">' . __( 'A simultaneously removal of all the old variations.' ) . '</p>
 			</td>
-		</tr>' . "\n";
+		</tr>';
 
 		$html .= '<tr>
 			<td>
@@ -210,11 +210,11 @@ class SKU_Error_Fixer_Template_Settings {
 				<p class="description">' . __( 'This operation cannot be cancel. Please backup your database if you are not sure.' ) . '</p>
 				<div class="removal-result"></div>
 			</td>
-		</tr>' . "\n";
+		</tr>';
 
-		$html .= '</table>' . "\n";
-		$html .= '</form>' . "\n";
-		$html .= '</div>' . "\n";
+		$html .= '</table>';
+		$html .= '</form>';
+		$html .= '</div>';
 
 		echo $html;
 	}

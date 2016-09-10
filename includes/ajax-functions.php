@@ -6,6 +6,7 @@
  */
 add_action( 'wp_ajax_nopriv_cleaning_old_vars', 'cleaning_old_vars' );
 add_action( 'wp_ajax_cleaning_old_vars', 'cleaning_old_vars' );
+
 function cleaning_old_vars() {
 	$result = '';
 	$needless_childs = get_needless_childs();
@@ -115,6 +116,7 @@ function cleaning_old_vars() {
  */
 add_action( 'wp_ajax_nopriv_auto_change_cleaning', 'auto_change_cleaning' );
 add_action( 'wp_ajax_auto_change_cleaning', 'auto_change_cleaning' );
+
 function auto_change_cleaning() {
 	$result = "Unique!";
 	$needless_childs = get_needless_childs();
