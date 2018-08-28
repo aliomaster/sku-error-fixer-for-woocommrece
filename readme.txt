@@ -49,7 +49,7 @@ After installing the plugin you will need to go to the plugin settings page Wooc
 
 = I've got an idea/fix for the plugin =
 
-If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliomaster/sku-error-fixer-for-woocommrece/blob/master/changelog.txt).
+If you would like to contribute to this plugin then please fork it and send a pull request. I'll merge the request if it fits into the goals for the plugin and credit you in the [changelog](https://github.com/aliowebdeveloper/sku-error-fixer-for-woocommrece/blob/master/changelog.txt).
 
 
 == Changelog ==
